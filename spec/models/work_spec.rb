@@ -28,8 +28,8 @@ RSpec.describe Work, type: :model do
 
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_length_of(:title).is_at_most(200) }
-    it { is_expected.to validate_presence_of(:slug) }
-    it { is_expected.to validate_uniqueness_of(:slug) }
+    # Note: slug presence/uniqueness is handled by FriendlyId which auto-generates
+    # slugs before validation. See "FriendlyId" describe block for slug behavior tests.
     it { is_expected.to validate_length_of(:description).is_at_most(2000) }
     it { is_expected.to validate_length_of(:dimensions).is_at_most(100) }
     it { is_expected.to validate_length_of(:medium).is_at_most(200) }

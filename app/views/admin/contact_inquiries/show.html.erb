@@ -6,7 +6,7 @@
     </span>
   </div>
   <div class="header-actions">
-    <% if @inquiry.new? %>
+    <% if @inquiry.pending? %>
       <%= button_to "Mark as Responded", mark_responded_admin_contact_inquiry_path(@inquiry), method: :patch, class: "btn btn--primary" %>
     <% end %>
     <%= link_to "Back", admin_contact_inquiries_path, class: "btn btn--ghost" %>

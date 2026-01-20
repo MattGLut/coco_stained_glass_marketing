@@ -85,7 +85,7 @@ RSpec.describe "Visitor browsing", type: :system do
       visit contact_path
       click_button "Send Message"
 
-      expect(page).to have_content("error")
+      expect(page).to have_content("Please correct the following")
     end
   end
 

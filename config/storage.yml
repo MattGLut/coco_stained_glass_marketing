@@ -6,7 +6,18 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-# Amazon S3 configuration for production
+# Tigris S3-compatible storage for Fly.io production
+# Fly.io automatically sets these env vars when you create a Tigris bucket
+tigris:
+  service: S3
+  access_key_id: <%= ENV["AWS_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] %>
+  endpoint: <%= ENV["AWS_ENDPOINT_URL_S3"] %>
+  region: <%= ENV.fetch("AWS_REGION", "auto") %>
+  bucket: <%= ENV["BUCKET_NAME"] %>
+  force_path_style: true
+
+# Amazon S3 configuration (legacy/fallback)
 # Set credentials via environment variables or Rails credentials
 amazon:
   service: S3

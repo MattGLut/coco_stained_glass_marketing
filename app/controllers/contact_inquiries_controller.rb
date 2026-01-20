@@ -16,7 +16,7 @@ class ContactInquiriesController < ApplicationController
     if @contact_inquiry.save
       redirect_to contact_path, notice: "Thank you for your message! We'll be in touch soon."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

@@ -1,4 +1,4 @@
-<%= form_with model: [:admin, @category], class: "admin-form" do |f| %>
+<%= form_with model: [:admin, @category], class: "admin-form admin-form--narrow" do |f| %>
   <% if @category.errors.any? %>
     <div class="form-errors">
       <h4><%= pluralize(@category.errors.count, "error") %> prevented saving:</h4>
@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <div class="form-card" style="max-width: 600px;">
+  <div class="form-card">
     <div class="form-group">
       <%= f.label :name, class: "form-label" %>
       <%= f.text_field :name, class: "form-input", required: true %>
@@ -23,7 +23,7 @@
 
     <div class="form-group">
       <%= f.label :position, "Display Order", class: "form-label" %>
-      <%= f.number_field :position, class: "form-input", min: 0, style: "max-width: 100px;" %>
+      <%= f.number_field :position, class: "form-input form-input--sm", min: 0 %>
       <span class="form-hint">Lower numbers appear first.</span>
     </div>
   </div>

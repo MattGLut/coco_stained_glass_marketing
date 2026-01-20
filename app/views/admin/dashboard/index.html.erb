@@ -4,29 +4,29 @@
 </header>
 
 <div class="dashboard-stats">
-  <div class="stat-card">
+  <%= link_to admin_contact_inquiries_path(status: "pending"), class: "stat-card" do %>
     <div class="stat-value"><%= @pending_inquiries_count %></div>
     <div class="stat-label">Pending Inquiries</div>
-    <%= link_to "View all", admin_contact_inquiries_path(status: "new"), class: "stat-link" %>
-  </div>
+    <span class="stat-link">View all →</span>
+  <% end %>
 
-  <div class="stat-card">
+  <%= link_to admin_commissions_path, class: "stat-card" do %>
     <div class="stat-value"><%= @active_commissions_count %></div>
     <div class="stat-label">Active Commissions</div>
-    <%= link_to "View all", admin_commissions_path, class: "stat-link" %>
-  </div>
+    <span class="stat-link">View all →</span>
+  <% end %>
 
-  <div class="stat-card">
+  <%= link_to admin_works_path, class: "stat-card" do %>
     <div class="stat-value"><%= @works_count %></div>
     <div class="stat-label">Gallery Works</div>
-    <%= link_to "Manage", admin_works_path, class: "stat-link" %>
-  </div>
+    <span class="stat-link">Manage →</span>
+  <% end %>
 
-  <div class="stat-card">
+  <%= link_to admin_users_path, class: "stat-card" do %>
     <div class="stat-value"><%= @users_count %></div>
     <div class="stat-label">Customers</div>
-    <%= link_to "View all", admin_users_path, class: "stat-link" %>
-  </div>
+    <span class="stat-link">View all →</span>
+  <% end %>
 </div>
 
 <div class="dashboard-grid">

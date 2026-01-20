@@ -35,7 +35,7 @@ module Admin
       if @commission.save
         redirect_to admin_commission_path(@commission), notice: "Commission was successfully created."
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -51,7 +51,7 @@ module Admin
       if @commission.update(commission_params)
         redirect_to admin_commission_path(@commission), notice: "Commission was successfully updated."
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

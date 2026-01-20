@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Skip Rollbar configuration during Docker build (SECRET_KEY_BASE_DUMMY is set during asset precompilation)
+return if ENV["SECRET_KEY_BASE_DUMMY"].present?
+
 Rollbar.configure do |config|
   config.access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
 

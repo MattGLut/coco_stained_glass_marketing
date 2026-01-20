@@ -1,8 +1,6 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
-fi
+# Database migrations run via fly.toml release_command
+# See: https://fly.io/docs/rails/getting-started/existing/#release-command
 
 exec "${@}"

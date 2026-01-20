@@ -116,7 +116,7 @@ RSpec.describe "Admin::Works", type: :request do
 
         it "renders the form with errors" do
           post admin_works_path, params: invalid_params
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end
@@ -148,7 +148,7 @@ RSpec.describe "Admin::Works", type: :request do
       context "with invalid params" do
         it "renders the form with errors" do
           patch admin_work_path(work), params: { work: { title: "" } }
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end

@@ -27,7 +27,7 @@ module Admin
       if @inquiry.update(inquiry_params)
         redirect_to admin_contact_inquiry_path(@inquiry), notice: "Notes saved."
       else
-        render :show, status: :unprocessable_entity
+        render :show, status: :unprocessable_content
       end
     end
 

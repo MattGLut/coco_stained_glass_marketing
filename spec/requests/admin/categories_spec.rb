@@ -103,7 +103,7 @@ RSpec.describe "Admin::Categories", type: :request do
 
         it "renders the form with errors" do
           post admin_categories_path, params: invalid_params
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end
@@ -135,7 +135,7 @@ RSpec.describe "Admin::Categories", type: :request do
       context "with invalid params" do
         it "renders the form with errors" do
           patch admin_category_path(category), params: { category: { name: "" } }
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end

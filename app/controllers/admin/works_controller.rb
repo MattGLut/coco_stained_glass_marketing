@@ -34,7 +34,7 @@ module Admin
       if @work.save
         redirect_to admin_work_path(@work), notice: "Work was successfully created.", status: :see_other
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -50,7 +50,7 @@ module Admin
       if @work.update(work_params)
         redirect_to admin_work_path(@work), notice: "Work was successfully updated.", status: :see_other
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

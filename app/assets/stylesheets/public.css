@@ -395,6 +395,180 @@ body::before {
 }
 
 /* =============================================================================
+   PAGE HEADERS
+   ============================================================================= */
+.page-header {
+  padding: var(--space-16) 0 var(--space-8);
+  text-align: center;
+  background: 
+    radial-gradient(ellipse at 30% 50%, rgba(196, 91, 132, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 50%, rgba(123, 94, 167, 0.08) 0%, transparent 50%);
+}
+
+.page-title {
+  font-size: var(--text-5xl);
+  margin-bottom: var(--space-4);
+}
+
+.page-subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+}
+
+/* =============================================================================
+   GALLERY
+   ============================================================================= */
+.gallery-filters {
+  margin-bottom: var(--space-8);
+}
+
+.filter-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-link {
+  display: inline-block;
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: rgba(248, 245, 240, 0.05);
+  border: 1px solid rgba(248, 245, 240, 0.1);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.filter-link:hover {
+  color: var(--color-cream);
+  background: rgba(248, 245, 240, 0.1);
+  border-color: rgba(248, 245, 240, 0.2);
+}
+
+.filter-link.active {
+  color: var(--color-midnight);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+.pagination-nav {
+  margin-top: var(--space-12);
+  display: flex;
+  justify-content: center;
+}
+
+/* =============================================================================
+   PROSE (Long-form Content)
+   ============================================================================= */
+.prose {
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+}
+
+.prose h2 {
+  font-size: var(--text-3xl);
+  color: var(--color-cream);
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(232, 168, 56, 0.2);
+}
+
+.prose h2:first-child {
+  margin-top: 0;
+}
+
+.prose h3 {
+  font-size: var(--text-2xl);
+  color: var(--color-cream);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
+}
+
+.prose p {
+  margin-bottom: var(--space-6);
+}
+
+.prose strong {
+  color: var(--color-cream);
+  font-weight: 600;
+}
+
+/* Craft Process List */
+.craft-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-8) 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.craft-list li {
+  position: relative;
+  padding: var(--space-5) var(--space-6);
+  padding-left: var(--space-12);
+  background: rgba(248, 245, 240, 0.03);
+  border: 1px solid rgba(248, 245, 240, 0.08);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.craft-list li:hover {
+  background: rgba(248, 245, 240, 0.05);
+  border-color: rgba(232, 168, 56, 0.2);
+}
+
+.craft-list li::before {
+  content: '◇';
+  position: absolute;
+  left: var(--space-5);
+  top: var(--space-5);
+  color: var(--color-accent);
+  font-size: var(--text-lg);
+}
+
+.craft-list li strong {
+  display: block;
+  font-size: var(--text-base);
+  margin-bottom: var(--space-1);
+}
+
+/* Call to Action Box */
+.cta-box {
+  margin-top: var(--space-12);
+  padding: var(--space-10);
+  background: linear-gradient(135deg, rgba(232, 168, 56, 0.1) 0%, rgba(123, 94, 167, 0.1) 100%);
+  border: 1px solid rgba(232, 168, 56, 0.2);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.cta-box h3 {
+  font-size: var(--text-2xl);
+  color: var(--color-cream);
+  margin: 0 0 var(--space-3);
+}
+
+.cta-box p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+/* =============================================================================
    AUTH PAGES
    ============================================================================= */
 .auth-page {

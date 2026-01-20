@@ -25,8 +25,8 @@ A Ruby on Rails marketing website for a stained glass artisan business featuring
 ### Technical Features
 - **Authentication** — Devise with customer and admin roles
 - **State Machine** — AASM for commission workflow (inquiry → completed → delivered)
-- **File Storage** — Active Storage with AWS S3 integration
-- **Email** — Action Mailer with SendGrid
+- **File Storage** — Active Storage with Tigris (Fly.io S3-compatible storage)
+- **Email** — Action Mailer with SendGrid SMTP
 - **SEO** — Meta tags, Open Graph, structured data (JSON-LD), dynamic sitemap
 - **Monitoring** — Rollbar error tracking, New Relic APM
 - **Testing** — RSpec, FactoryBot, Capybara
@@ -41,8 +41,9 @@ A Ruby on Rails marketing website for a stained glass artisan business featuring
 - Devise (Authentication)
 - AASM (State Machine)
 - Pundit (Authorization)
-- AWS S3 (File Storage)
-- SendGrid (Email)
+- Fly.io (Hosting)
+- Tigris (File Storage - S3-compatible on Fly.io)
+- SendGrid (Transactional Email)
 - Rollbar (Error Tracking)
 - New Relic (APM)
 
@@ -69,33 +70,27 @@ rails db:create db:migrate db:seed
 rails server
 ```
 
-### Environment Variables
+### Environment Variables (Local Development)
 
-Copy `config/env.example` to `.env` and configure:
+Copy `config/env.example` to `.env` and configure for local development:
 
 ```bash
-# Database
-DATABASE_URL=postgres://...
+# Database (optional - defaults to local postgres)
+DATABASE_URL=postgres://localhost/stained_glass_development
 
-# AWS S3
-AWS_ACCESS_KEY_ID=xxx
-AWS_SECRET_ACCESS_KEY=xxx
-AWS_REGION=us-east-1
-AWS_BUCKET=stained-glass-production
-
-# SendGrid
+# SendGrid (optional for local - uses letter_opener by default)
+# Only needed if testing actual email delivery locally
 SENDGRID_API_KEY=SG.xxx
-SENDGRID_DOMAIN=yourdomain.com
-
-# Monitoring
-ROLLBAR_ACCESS_TOKEN=xxx
-NEW_RELIC_LICENSE_KEY=xxx
 
 # Application
-APP_HOST=https://yourdomain.com
+APP_HOST=localhost:3000
 DEFAULT_FROM_EMAIL=hello@yourdomain.com
 ADMIN_EMAIL=admin@yourdomain.com
 ```
+
+**Note:** In development, emails are captured by `letter_opener` and displayed in the browser instead of being sent. See `config/environments/development.rb`.
+
+For production environment variables, see the [Fly.io Secrets](#flyio-secrets) section below.
 
 ### Default Credentials (Development)
 
@@ -120,34 +115,89 @@ COVERAGE=true bundle exec rspec
 
 ## Deployment
 
-The app is configured for deployment with Kamal. Update `config/deploy.yml` with your server details.
+The app is deployed on **Fly.io** with automatic deploys via GitHub Actions on push to `master`.
+
+### Fly.io Setup
 
 ```bash
-# Deploy
-bin/kamal deploy
+# Install Fly CLI
+# See: https://fly.io/docs/hands-on/install-flyctl/
 
-# Or use Docker directly
-docker build -t stained-glass .
-docker run -p 3000:3000 stained-glass
+# Login to Fly
+fly auth login
+
+# Launch app (first time only - already configured in fly.toml)
+fly launch
+
+# Deploy manually
+fly deploy
+
+# View logs
+fly logs
+
+# Open remote Rails console
+fly ssh console -C "/rails/bin/rails console"
 ```
 
-### AWS Setup Checklist
+### Fly.io Secrets
 
-1. Create S3 bucket for file storage
-2. Create IAM user with S3 access
-3. Configure CORS on S3 bucket for uploads
-4. Set environment variables
+Set these secrets in your Fly.io app for production:
+
+```bash
+# Required for email delivery (contact form, notifications)
+fly secrets set SENDGRID_API_KEY=SG.your_api_key_here
+
+# Application settings
+fly secrets set APP_HOST=yourdomain.com
+fly secrets set DEFAULT_FROM_EMAIL=hello@yourdomain.com
+fly secrets set ADMIN_EMAIL=coco@yourdomain.com
+
+# Rails secrets
+fly secrets set SECRET_KEY_BASE=$(rails secret)
+
+# Monitoring (optional)
+fly secrets set ROLLBAR_ACCESS_TOKEN=xxx
+fly secrets set NEW_RELIC_LICENSE_KEY=xxx
+```
+
+### SendGrid Setup
+
+The contact form and commission notifications require SendGrid for email delivery:
+
+1. **Create a SendGrid account** at [sendgrid.com](https://sendgrid.com)
+2. **Create an API key** with "Mail Send" permissions
+3. **Set the secret on Fly.io:**
+   ```bash
+   fly secrets set SENDGRID_API_KEY=SG.your_api_key_here
+   ```
+4. **Optional:** Configure a custom sending domain in SendGrid for better deliverability
+
+The free tier (100 emails/day) is sufficient for contact form usage.
+
+**Configuration location:** `config/initializers/sendgrid.rb`
+
+### Tigris Storage (Fly.io)
+
+File uploads use Tigris, Fly.io's S3-compatible object storage:
+
+```bash
+# Create Tigris bucket (if not already created)
+fly storage create
+
+# The bucket credentials are automatically set as secrets
+```
+
+**Configuration location:** `config/storage.yml`
 
 ### Production Checklist
 
-- [ ] Configure production database credentials
-- [ ] Set up S3 bucket and credentials
-- [ ] Configure SendGrid API key
-- [ ] Set up Rollbar project
-- [ ] Configure New Relic
-- [ ] Set `SECRET_KEY_BASE` and `RAILS_MASTER_KEY`
-- [ ] Enable SSL (`config.force_ssl = true`)
+- [ ] Configure Fly.io secrets (see above)
+- [ ] Set up SendGrid API key for email delivery
+- [ ] Create Tigris bucket for file storage
+- [ ] Set up Rollbar project (optional)
+- [ ] Configure New Relic (optional)
 - [ ] Set correct `APP_HOST` for mailer URLs
+- [ ] Verify DNS and SSL certificate
 - [ ] Generate and deploy sitemap
 - [ ] Verify robots.txt
 - [ ] Add `og-default.jpg` to `app/assets/images/` for social sharing (see below)

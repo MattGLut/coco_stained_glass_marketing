@@ -9,6 +9,9 @@ console_command = '/rails/bin/rails console'
 
 [build]
 
+[deploy]
+  release_command = '/rails/bin/rails db:prepare'
+
 [env]
   HTTP_PORT = "8080"
 

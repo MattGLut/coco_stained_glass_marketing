@@ -1,0 +1,20 @@
+Your Quote is Ready!
+
+Hello <%= @customer.first_name %>,
+
+Great news! We've prepared a quote for your commission: "<%= @commission.title %>".
+
+<% if @commission.estimated_price.present? -%>
+Estimated Price: <%= number_to_currency(@commission.estimated_price) %>
+<% end -%>
+<% if @commission.estimated_start_date.present? -%>
+Estimated Start Date: <%= @commission.estimated_start_date.strftime("%B %d, %Y") %>
+<% end -%>
+<% if @commission.estimated_completion_date.present? -%>
+Estimated Completion: <%= @commission.estimated_completion_date.strftime("%B %d, %Y") %>
+<% end -%>
+
+Please review the details and let us know if you'd like to proceed. You can view the full quote at:
+<%= portal_commission_url(@commission) %>
+
+Thank you for choosing Coco's Stained Glass!

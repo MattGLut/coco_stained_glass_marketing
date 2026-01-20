@@ -7,7 +7,7 @@
 
 <div class="admin-filters">
   <%= link_to "All", admin_contact_inquiries_path, class: "filter-btn #{params[:status].blank? ? 'active' : ''}" %>
-  <%= link_to "New", admin_contact_inquiries_path(status: "new"), class: "filter-btn #{params[:status] == 'new' ? 'active' : ''}" %>
+  <%= link_to "Pending", admin_contact_inquiries_path(status: "pending"), class: "filter-btn #{params[:status] == 'pending' ? 'active' : ''}" %>
   <%= link_to "Responded", admin_contact_inquiries_path(status: "responded"), class: "filter-btn #{params[:status] == 'responded' ? 'active' : ''}" %>
   <%= link_to "Archived", admin_contact_inquiries_path(status: "archived"), class: "filter-btn #{params[:status] == 'archived' ? 'active' : ''}" %>
 </div>
@@ -26,7 +26,7 @@
       </thead>
       <tbody>
         <% @inquiries.each do |inquiry| %>
-          <tr class="<%= 'unread' if inquiry.new? %>">
+          <tr class="<%= 'unread' if inquiry.pending? %>">
             <td>
               <strong><%= inquiry.name %></strong><br>
               <small><%= inquiry.email %></small>

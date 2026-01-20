@@ -8,7 +8,7 @@ module Admin
       @inquiries = ContactInquiry.recent
 
       case params[:status]
-      when "new"
+      when "pending"
         @inquiries = @inquiries.pending
       when "responded"
         @inquiries = @inquiries.responded

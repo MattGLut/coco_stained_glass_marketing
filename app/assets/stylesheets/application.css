@@ -829,13 +829,40 @@ p:last-child {
 .admin-layout {
   display: grid;
   grid-template-columns: 250px 1fr;
-  min-height: calc(100vh - var(--header-height));
+  min-height: 100vh;
 }
 
 .admin-sidebar {
   background: var(--color-midnight);
   border-right: 1px solid rgba(248, 245, 240, 0.1);
   padding: var(--space-6);
+}
+
+.admin-nav-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.admin-nav--footer {
+  margin-top: auto;
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(248, 245, 240, 0.1);
+}
+
+/* Style button_to forms in nav to look like links */
+.admin-nav-item form {
+  margin: 0;
+}
+
+.admin-nav-item form button.admin-nav-link {
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  text-align: left;
 }
 
 .admin-content {

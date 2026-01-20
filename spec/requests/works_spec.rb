@@ -51,9 +51,8 @@ RSpec.describe "Works", type: :request do
 
     it "returns 404 for draft work" do
       draft_work = create(:work, published: false)
-      expect {
-        get work_path(draft_work)
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      get work_path(draft_work)
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

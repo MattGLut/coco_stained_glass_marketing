@@ -2,8 +2,9 @@ name: CI
 
 on:
   pull_request:
-  push:
-    branches: [ master ]
+    branches:
+      - develop
+      - master
 
 jobs:
   scan_ruby:
@@ -20,10 +21,10 @@ jobs:
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
-      
+
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
-      
+
   scan_js:
     runs-on: ubuntu-latest
 
@@ -65,7 +66,7 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
-  test:
+  spec:
     runs-on: ubuntu-latest
 
     services:
@@ -96,15 +97,15 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Run tests
+      - name: Run specs
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test
+        run: bin/rails db:test:prepare && bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb"
 
-  system-test:
+  system-spec:
     runs-on: ubuntu-latest
 
     services:
@@ -135,15 +136,15 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Run System Tests
+      - name: Run system specs
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test:system
+        run: bin/rails db:test:prepare && bundle exec rspec spec/system
 
-      - name: Keep screenshots from failed system tests
+      - name: Keep screenshots from failed system specs
         uses: actions/upload-artifact@v4
         if: failure()
         with:

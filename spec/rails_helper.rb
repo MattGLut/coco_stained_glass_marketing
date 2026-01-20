@@ -23,6 +23,13 @@ end
 
 RSpec.configure do |config|
   # =============================================================================
+  # Ensure Rails routes are loaded before specs (fixes Devise mapping issues)
+  # =============================================================================
+  config.before(:suite) do
+    Rails.application.routes.recognize_path("/") rescue nil
+  end
+
+  # =============================================================================
   # Database & Fixtures
   # =============================================================================
 

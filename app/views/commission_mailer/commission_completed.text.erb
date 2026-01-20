@@ -1,0 +1,16 @@
+Your Commission is Complete!
+
+Hello <%= @customer.first_name %>,
+
+We're thrilled to let you know that your commission "<%= @commission.title %>" is now complete!
+
+<% if @commission.actual_completion_date.present? -%>
+Completed on: <%= @commission.actual_completion_date.strftime("%B %d, %Y") %>
+<% end -%>
+
+We'll be in touch shortly to arrange delivery or pickup of your beautiful new stained glass piece.
+
+You can view your commission details at:
+<%= portal_commission_url(@commission) %>
+
+Thank you for choosing Coco's Stained Glass! We hope you love your new piece.

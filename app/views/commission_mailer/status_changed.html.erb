@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <h1>Commission Status Update</h1>
+    
+    <p>Hello <%= @customer.first_name %>,</p>
+    
+    <p>The status of your commission "<%= @commission.title %>" has been updated.</p>
+    
+    <p>
+      <strong>Previous status:</strong> <%= @previous_status.to_s.humanize %><br>
+      <strong>New status:</strong> <%= @commission.status_label %>
+    </p>
+    
+    <p>
+      You can view your commission details in your 
+      <%= link_to "customer portal", portal_commission_url(@commission) %>.
+    </p>
+    
+    <p>Thank you for choosing Coco's Stained Glass!</p>
+  </body>
+</html>

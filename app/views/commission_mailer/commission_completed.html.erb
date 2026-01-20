@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <h1>Your Commission is Complete!</h1>
+    
+    <p>Hello <%= @customer.first_name %>,</p>
+    
+    <p>We're thrilled to let you know that your commission "<%= @commission.title %>" is now complete!</p>
+    
+    <% if @commission.actual_completion_date.present? %>
+      <p><strong>Completed on:</strong> <%= @commission.actual_completion_date.strftime("%B %d, %Y") %></p>
+    <% end %>
+    
+    <p>We'll be in touch shortly to arrange delivery or pickup of your beautiful new stained glass piece.</p>
+    
+    <p>
+      You can view your commission details in your 
+      <%= link_to "customer portal", portal_commission_url(@commission) %>.
+    </p>
+    
+    <p>Thank you for choosing Coco's Stained Glass! We hope you love your new piece.</p>
+  </body>
+</html>

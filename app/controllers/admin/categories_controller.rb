@@ -5,12 +5,13 @@ module Admin
     before_action :set_category, only: [:show, :edit, :update, :destroy]
 
     def index
-      @categories = Category.ordered.includes(:works)
+      @categories = policy_scope(Category).ordered.includes(:works)
 
       set_meta_tags(title: "Manage Categories")
     end
 
     def show
+      authorize @category
       @works = @category.works.ordered
 
       set_meta_tags(title: @category.name)
@@ -18,12 +19,14 @@ module Admin
 
     def new
       @category = Category.new
+      authorize @category
 
       set_meta_tags(title: "New Category")
     end
 
     def create
       @category = Category.new(category_params)
+      authorize @category
 
       if @category.save
         redirect_to admin_categories_path, notice: "Category was successfully created."
@@ -33,10 +36,12 @@ module Admin
     end
 
     def edit
+      authorize @category
       set_meta_tags(title: "Edit: #{@category.name}")
     end
 
     def update
+      authorize @category
       if @category.update(category_params)
         redirect_to admin_categories_path, notice: "Category was successfully updated."
       else
@@ -45,6 +50,7 @@ module Admin
     end
 
     def destroy
+      authorize @category
       @category.destroy
       redirect_to admin_categories_path, notice: "Category was successfully deleted."
     end

@@ -5,7 +5,7 @@ module Admin
     before_action :set_commission, only: [:show, :edit, :update, :destroy, :transition]
 
     def index
-      @commissions = Commission.includes(:user).recent
+      @commissions = policy_scope(Commission).includes(:user).recent
 
       if params[:status].present?
         @commissions = @commissions.by_status(params[:status])
@@ -15,6 +15,7 @@ module Admin
     end
 
     def show
+      authorize @commission
       @updates = @commission.commission_updates.recent
       @new_update = @commission.commission_updates.build
 
@@ -23,6 +24,7 @@ module Admin
 
     def new
       @commission = Commission.new
+      authorize @commission
       @users = User.customer.order(:last_name, :first_name)
 
       set_meta_tags(title: "New Commission")
@@ -30,6 +32,7 @@ module Admin
 
     def create
       @commission = Commission.new(commission_params)
+      authorize @commission
       @users = User.customer.order(:last_name, :first_name)
 
       if @commission.save
@@ -40,12 +43,14 @@ module Admin
     end
 
     def edit
+      authorize @commission
       @users = User.customer.order(:last_name, :first_name)
 
       set_meta_tags(title: "Edit: #{@commission.title}")
     end
 
     def update
+      authorize @commission
       @users = User.customer.order(:last_name, :first_name)
 
       if @commission.update(commission_params)
@@ -56,13 +61,15 @@ module Admin
     end
 
     def destroy
+      authorize @commission
       @commission.destroy
       redirect_to admin_commissions_path, notice: "Commission was successfully deleted."
     end
 
     def transition
+      authorize @commission
       event = params[:event]&.to_sym
-      
+
       if @commission.aasm.events.map(&:name).include?(event)
         if @commission.send("may_#{event}?") && @commission.send("#{event}!")
           redirect_to admin_commission_path(@commission), notice: "Status updated to #{@commission.status_label}."

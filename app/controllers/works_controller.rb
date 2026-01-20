@@ -3,10 +3,10 @@
 class WorksController < ApplicationController
   def index
     @categories = Category.with_published_works.ordered
-    
-    works = Work.published.includes(:categories).ordered
+
+    works = policy_scope(Work).includes(:categories).ordered
     works = works.in_category(params[:category]) if params[:category].present?
-    
+
     @pagy, @works = pagy(works, items: 12)
 
     set_meta_tags(
@@ -16,8 +16,10 @@ class WorksController < ApplicationController
   end
 
   def show
-    @work = Work.published.friendly.find(params[:id])
-    @related_works = Work.published
+    @work = policy_scope(Work).friendly.find(params[:id])
+    authorize @work
+
+    @related_works = policy_scope(Work)
                          .where.not(id: @work.id)
                          .joins(:categories)
                          .where(categories: { id: @work.category_ids })
@@ -48,11 +50,5 @@ class WorksController < ApplicationController
         "name": "Coco"
       }
     }
-  end
-
-  private
-
-  def skip_pundit?
-    true
   end
 end

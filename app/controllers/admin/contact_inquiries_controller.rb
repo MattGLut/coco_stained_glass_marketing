@@ -5,7 +5,7 @@ module Admin
     before_action :set_inquiry, only: [:show, :update, :destroy, :mark_responded, :archive]
 
     def index
-      @inquiries = ContactInquiry.recent
+      @inquiries = policy_scope(ContactInquiry).recent
 
       case params[:status]
       when "pending"
@@ -20,10 +20,12 @@ module Admin
     end
 
     def show
+      authorize @inquiry
       set_meta_tags(title: "Inquiry from #{@inquiry.name}")
     end
 
     def update
+      authorize @inquiry
       if @inquiry.update(inquiry_params)
         redirect_to admin_contact_inquiry_path(@inquiry), notice: "Notes saved."
       else
@@ -32,16 +34,19 @@ module Admin
     end
 
     def destroy
+      authorize @inquiry
       @inquiry.destroy
       redirect_to admin_contact_inquiries_path, notice: "Inquiry deleted."
     end
 
     def mark_responded
+      authorize @inquiry
       @inquiry.mark_as_responded!
       redirect_to admin_contact_inquiry_path(@inquiry), notice: "Marked as responded."
     end
 
     def archive
+      authorize @inquiry
       @inquiry.mark_as_archived!
       redirect_to admin_contact_inquiries_path, notice: "Inquiry archived."
     end

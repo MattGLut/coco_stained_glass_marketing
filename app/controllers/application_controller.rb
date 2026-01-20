@@ -8,9 +8,11 @@ class ApplicationController < ActionController::Base
   # CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
-  # Pundit: ensure authorization is called (disabled for now - enable per-controller as needed)
-  # after_action :verify_authorized, unless: :skip_pundit?
-  # after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
+  # Pundit: ensure authorization is called on every action
+  # This provides a safety net - if authorization is missing, the request will fail
+  # - verify_authorized: ensures authorize() was called (for non-index actions)
+  # - verify_policy_scoped: ensures policy_scope() was called (for index actions)
+  after_action :verify_pundit_authorization, unless: :skip_pundit?
 
   # Pundit: handle authorization errors
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -44,10 +46,26 @@ class ApplicationController < ActionController::Base
     redirect_back(fallback_location: root_path)
   end
 
+  # Custom Pundit verification that handles both authorization and policy scoping
+  # based on the current action
+  def verify_pundit_authorization
+    if action_name == "index"
+      verify_policy_scoped
+    else
+      verify_authorized
+    end
+  end
+
+  # Skip Pundit verification for certain controllers
+  # - Devise controllers handle their own authentication
+  # - Pages controller is public content
+  # - Health check and Rails internal controllers
+  # - Sitemaps are public
   def skip_pundit?
-    devise_controller? || 
-      controller_name == "pages" || 
+    devise_controller? ||
+      controller_name == "pages" ||
       controller_name == "health" ||
+      controller_name == "sitemaps" ||
       self.class.name.start_with?("Rails::")
   end
 

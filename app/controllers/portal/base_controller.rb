@@ -14,9 +14,5 @@ module Portal
         redirect_to root_path, alert: "You don't have access to this area."
       end
     end
-
-    def skip_pundit?
-      true
-    end
   end
 end

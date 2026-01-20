@@ -3,7 +3,7 @@
 module Portal
   class DashboardController < BaseController
     def index
-      @commissions = current_user.commissions.recent
+      @commissions = policy_scope(Commission).recent
       @active_commissions = @commissions.active
       @completed_commissions = @commissions.where(status: [:completed, :delivered])
 

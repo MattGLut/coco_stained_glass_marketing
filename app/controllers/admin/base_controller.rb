@@ -14,9 +14,5 @@ module Admin
         redirect_to root_path, alert: "You must be an administrator to access this area."
       end
     end
-
-    def skip_pundit?
-      true
-    end
   end
 end

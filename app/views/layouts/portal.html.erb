@@ -17,7 +17,9 @@
 
     <link rel="icon" href="/icon.png" type="image/png">
     
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "public", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "portal", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 

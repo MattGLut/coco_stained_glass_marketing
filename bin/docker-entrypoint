@@ -3,4 +3,7 @@
 # Database migrations run via fly.toml release_command
 # See: https://fly.io/docs/rails/getting-started/existing/#release-command
 
+# Start SolidQueue worker in the background
+/rails/bin/jobs &
+
 exec "${@}"

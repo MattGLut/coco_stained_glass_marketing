@@ -12,10 +12,6 @@ console_command = '/rails/bin/rails console'
 [deploy]
   release_command = '/rails/bin/rails db:prepare'
 
-[processes]
-  app = '/rails/bin/rails server -p 8080'
-  worker = '/rails/bin/jobs'
-
 [env]
   HTTP_PORT = "8080"
 
@@ -25,14 +21,7 @@ console_command = '/rails/bin/rails console'
   auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
-  processes = ['app']
 
 [[vm]]
   size = 'shared-cpu-1x'
   memory = '1gb'
-  processes = ['app']
-
-[[vm]]
-  size = 'shared-cpu-1x'
-  memory = '512mb'
-  processes = ['worker']

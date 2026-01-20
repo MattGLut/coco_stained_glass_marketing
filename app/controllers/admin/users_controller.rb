@@ -5,7 +5,7 @@ module Admin
     before_action :set_user, only: [:show, :edit, :update]
 
     def index
-      @users = User.order(created_at: :desc)
+      @users = policy_scope(User).order(created_at: :desc)
 
       if params[:role].present?
         @users = @users.where(role: params[:role])
@@ -15,16 +15,19 @@ module Admin
     end
 
     def show
+      authorize @user
       @commissions = @user.commissions.recent
 
       set_meta_tags(title: @user.full_name)
     end
 
     def edit
+      authorize @user
       set_meta_tags(title: "Edit: #{@user.full_name}")
     end
 
     def update
+      authorize @user
       if @user.update(user_params)
         redirect_to admin_user_path(@user), notice: "User was successfully updated."
       else

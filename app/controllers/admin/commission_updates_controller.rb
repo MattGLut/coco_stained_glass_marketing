@@ -8,6 +8,7 @@ module Admin
     def create
       @update = @commission.commission_updates.build(update_params)
       @update.user = current_user
+      authorize @update
 
       if @update.save
         redirect_to admin_commission_path(@commission), notice: "Update was posted successfully."
@@ -17,10 +18,12 @@ module Admin
     end
 
     def edit
+      authorize @update
       set_meta_tags(title: "Edit Update")
     end
 
     def update
+      authorize @update
       if @update.update(update_params)
         redirect_to admin_commission_path(@commission), notice: "Update was successfully edited."
       else
@@ -29,6 +32,7 @@ module Admin
     end
 
     def destroy
+      authorize @update
       @update.destroy
       redirect_to admin_commission_path(@commission), notice: "Update was deleted."
     end

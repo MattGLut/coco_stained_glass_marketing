@@ -3,6 +3,7 @@
 class ContactInquiriesController < ApplicationController
   def new
     @contact_inquiry = ContactInquiry.new
+    authorize @contact_inquiry
 
     set_meta_tags(
       title: "Contact",
@@ -12,6 +13,7 @@ class ContactInquiriesController < ApplicationController
 
   def create
     @contact_inquiry = ContactInquiry.new(contact_inquiry_params)
+    authorize @contact_inquiry
 
     if @contact_inquiry.save
       redirect_to contact_path, notice: "Thank you for your message! We'll be in touch soon."
@@ -24,9 +26,5 @@ class ContactInquiriesController < ApplicationController
 
   def contact_inquiry_params
     params.require(:contact_inquiry).permit(:name, :email, :phone, :subject, :message)
-  end
-
-  def skip_pundit?
-    true
   end
 end

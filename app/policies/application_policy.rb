@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 # Base policy class for Pundit authorization
+# All policies should inherit from this class
+#
+# Default behavior: deny all actions (secure by default)
+# Subclasses should override methods to grant access
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -9,7 +13,7 @@ class ApplicationPolicy
     @record = record
   end
 
-  # Default: deny all actions
+  # Default: deny all actions (secure by default)
   def index?
     false
   end
@@ -38,7 +42,10 @@ class ApplicationPolicy
     false
   end
 
-  # Helper methods
+  # ============================================================================
+  # Helper methods available to all policies
+  # ============================================================================
+
   def admin?
     user&.admin?
   end
@@ -51,18 +58,40 @@ class ApplicationPolicy
     user.present?
   end
 
+  # Check if record belongs to current user (for models with user_id)
+  def owned_by_user?
+    record.respond_to?(:user_id) && record.user_id == user&.id
+  end
+
+  # ============================================================================
+  # Base Scope class
+  # ============================================================================
   class Scope
+    attr_reader :user, :scope
+
     def initialize(user, scope)
       @user = user
       @scope = scope
     end
 
+    # Default: return nothing (secure by default)
+    # Subclasses should override to return appropriate records
     def resolve
-      raise NotImplementedError, "You must define #resolve in #{self.class}"
+      scope.none
     end
 
     private
 
-    attr_reader :user, :scope
+    def admin?
+      user&.admin?
+    end
+
+    def customer?
+      user&.customer?
+    end
+
+    def logged_in?
+      user.present?
+    end
   end
 end

@@ -3,6 +3,10 @@
 module Admin
   class DashboardController < BaseController
     def index
+      # Dashboard is admin-only, skip Pundit checks
+      # Access is already controlled by Admin::BaseController#ensure_admin_access
+      skip_policy_scope
+
       @pending_inquiries_count = ContactInquiry.pending.count
       @active_commissions_count = Commission.active.count
       @works_count = Work.count

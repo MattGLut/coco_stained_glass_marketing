@@ -32,7 +32,7 @@ module Admin
       @categories = Category.ordered
 
       if @work.save
-        redirect_to admin_work_path(@work), notice: "Work was successfully created."
+        redirect_to admin_work_path(@work), notice: "Work was successfully created.", status: :see_other
       else
         render :new, status: :unprocessable_entity
       end
@@ -48,7 +48,7 @@ module Admin
       @categories = Category.ordered
 
       if @work.update(work_params)
-        redirect_to admin_work_path(@work), notice: "Work was successfully updated."
+        redirect_to admin_work_path(@work), notice: "Work was successfully updated.", status: :see_other
       else
         render :edit, status: :unprocessable_entity
       end
@@ -56,33 +56,33 @@ module Admin
 
     def destroy
       @work.destroy
-      redirect_to admin_works_path, notice: "Work was successfully deleted."
+      redirect_to admin_works_path, notice: "Work was successfully deleted.", status: :see_other
     end
 
     def publish
       @work.update(published: true)
-      redirect_to admin_work_path(@work), notice: "Work has been published."
+      redirect_to admin_work_path(@work), notice: "Work has been published.", status: :see_other
     end
 
     def unpublish
       @work.update(published: false)
-      redirect_to admin_work_path(@work), notice: "Work has been unpublished."
+      redirect_to admin_work_path(@work), notice: "Work has been unpublished.", status: :see_other
     end
 
     def feature
       @work.update(featured: true)
-      redirect_to admin_work_path(@work), notice: "Work has been featured."
+      redirect_to admin_work_path(@work), notice: "Work has been featured.", status: :see_other
     end
 
     def unfeature
       @work.update(featured: false)
-      redirect_to admin_work_path(@work), notice: "Work has been unfeatured."
+      redirect_to admin_work_path(@work), notice: "Work has been unfeatured.", status: :see_other
     end
 
     def remove_image
       image = @work.images.find(params[:image_id])
       image.purge
-      redirect_to edit_admin_work_path(@work), notice: "Image removed."
+      redirect_to edit_admin_work_path(@work), notice: "Image removed.", status: :see_other
     end
 
     def update_positions

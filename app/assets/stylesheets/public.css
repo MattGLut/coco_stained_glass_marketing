@@ -374,6 +374,153 @@ body::before {
   font-size: var(--text-lg);
 }
 
+.section-cta {
+  text-align: center;
+  margin-top: var(--space-12);
+}
+
+/* Highlighted Section */
+.section--highlight {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.8) 0%, rgba(15, 15, 26, 0.9) 100%);
+  border-top: 1px solid rgba(232, 168, 56, 0.1);
+  border-bottom: 1px solid rgba(232, 168, 56, 0.1);
+}
+
+/* =============================================================================
+   ABOUT PREVIEW (Home Page)
+   ============================================================================= */
+.about-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.about-preview-content h2 {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-6);
+}
+
+.about-preview-content p {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-6);
+}
+
+/* Decorative Glass Pattern */
+.about-preview-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.glass-pattern {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  width: 280px;
+  height: 280px;
+  transform: rotate(45deg);
+}
+
+.glass-piece {
+  border-radius: var(--radius-md);
+  opacity: 0.8;
+  transition: all var(--transition-slow);
+  animation: glassShimmer 4s ease-in-out infinite;
+}
+
+.glass-piece:nth-child(2) { animation-delay: 1s; }
+.glass-piece:nth-child(3) { animation-delay: 2s; }
+.glass-piece:nth-child(4) { animation-delay: 3s; }
+
+@keyframes glassShimmer {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.02); }
+}
+
+.glass-piece--amber {
+  background: linear-gradient(135deg, var(--color-amber) 0%, var(--color-amber-light) 100%);
+  box-shadow: 0 0 40px rgba(232, 168, 56, 0.3);
+}
+
+.glass-piece--rose {
+  background: linear-gradient(135deg, var(--color-rose) 0%, #d87a9e 100%);
+  box-shadow: 0 0 40px rgba(196, 91, 132, 0.3);
+}
+
+.glass-piece--jade {
+  background: linear-gradient(135deg, var(--color-jade) 0%, #5aab9a 100%);
+  box-shadow: 0 0 40px rgba(61, 139, 122, 0.3);
+}
+
+.glass-piece--amethyst {
+  background: linear-gradient(135deg, var(--color-amethyst) 0%, #9678bf 100%);
+  box-shadow: 0 0 40px rgba(123, 94, 167, 0.3);
+}
+
+/* =============================================================================
+   COMMISSION CTA (Home Page)
+   ============================================================================= */
+.commission-cta {
+  background: var(--color-surface);
+  border: 1px solid rgba(248, 245, 240, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-12);
+  text-align: center;
+}
+
+.commission-cta h3 {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-8);
+  color: var(--color-accent);
+}
+
+/* Process Steps */
+.process-steps {
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-10);
+  padding: 0;
+  text-align: center;
+}
+
+.process-steps li {
+  counter-increment: step;
+  position: relative;
+  padding-top: var(--space-16);
+}
+
+.process-steps li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-amber-light) 100%);
+  color: var(--color-midnight);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(232, 168, 56, 0.3);
+}
+
+.step-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
 /* =============================================================================
    GRID LAYOUTS
    ============================================================================= */
@@ -658,9 +805,52 @@ body::before {
 /* =============================================================================
    RESPONSIVE ADJUSTMENTS
    ============================================================================= */
+@media (max-width: 1024px) {
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .section {
     padding: var(--space-12) 0;
+  }
+
+  .about-preview {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    text-align: center;
+  }
+
+  .about-preview-content h2 {
+    font-size: var(--text-3xl);
+  }
+
+  .glass-pattern {
+    width: 200px;
+    height: 200px;
+  }
+
+  .commission-cta {
+    padding: var(--space-8);
+  }
+
+  .process-steps {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .process-steps li {
+    padding-top: var(--space-14);
+  }
+
+  .process-steps li::before {
+    width: 40px;
+    height: 40px;
+    font-size: var(--text-lg);
   }
 }
 

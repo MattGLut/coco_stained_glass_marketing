@@ -1,0 +1,31 @@
+<article class="work-card card">
+  <%= link_to work_path(work), class: "work-card-link" do %>
+    <div class="card-image">
+      <% if work.has_images? %>
+        <%= image_tag work.primary_image.variant(:medium), 
+            alt: work.title,
+            loading: "lazy" %>
+      <% else %>
+        <div class="card-image-placeholder">
+          <span>◇</span>
+        </div>
+      <% end %>
+
+      <% if work.featured? %>
+        <span class="work-badge work-badge--featured">Featured</span>
+      <% end %>
+    </div>
+
+    <div class="card-content">
+      <h3 class="card-title"><%= work.title %></h3>
+      <% if work.year_created.present? %>
+        <p class="work-year"><%= work.year_created %></p>
+      <% end %>
+      <% if work.categories.any? %>
+        <p class="work-categories">
+          <%= work.category_names %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+</article>

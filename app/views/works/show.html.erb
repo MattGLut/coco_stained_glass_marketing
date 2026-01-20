@@ -1,0 +1,103 @@
+<% content_for :head do %>
+  <%= tag.link rel: "canonical", href: work_url(@work) %>
+  <script type="application/ld+json">
+    <%= raw @artwork_json_ld.to_json %>
+  </script>
+<% end %>
+
+<section class="work-detail">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <%= link_to "Gallery", works_path %> 
+      <span class="breadcrumb-separator">→</span>
+      <span><%= @work.title %></span>
+    </nav>
+
+    <div class="work-detail-grid">
+      <div class="work-gallery">
+        <% if @work.has_images? %>
+          <div class="work-main-image" data-controller="lightbox">
+            <%= image_tag @work.primary_image.variant(:large),
+                alt: @work.title,
+                class: "main-image",
+                data: { action: "click->lightbox#open" } %>
+          </div>
+
+          <% if @work.images.count > 1 %>
+            <div class="work-thumbnails">
+              <% @work.images.each_with_index do |image, index| %>
+                <button class="thumbnail <%= 'active' if index == 0 %>"
+                        data-index="<%= index %>">
+                  <%= image_tag image.variant(:thumb), alt: "#{@work.title} - Image #{index + 1}" %>
+                </button>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="work-no-image">
+            <span class="no-image-icon">◇</span>
+            <p>Image coming soon</p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="work-info">
+        <header class="work-header">
+          <h1 class="work-title"><%= @work.title %></h1>
+          <% if @work.year_created %>
+            <p class="work-year"><%= @work.year_created %></p>
+          <% end %>
+        </header>
+
+        <% if @work.description.present? %>
+          <div class="work-description">
+            <%= simple_format(@work.description) %>
+          </div>
+        <% end %>
+
+        <dl class="work-details">
+          <% if @work.dimensions.present? %>
+            <div class="detail-item">
+              <dt>Dimensions</dt>
+              <dd><%= @work.dimensions %></dd>
+            </div>
+          <% end %>
+
+          <% if @work.medium.present? %>
+            <div class="detail-item">
+              <dt>Medium</dt>
+              <dd><%= @work.medium %></dd>
+            </div>
+          <% end %>
+
+          <% if @work.categories.any? %>
+            <div class="detail-item">
+              <dt>Categories</dt>
+              <dd>
+                <% @work.categories.each do |category| %>
+                  <%= link_to category.name, works_path(category: category.id), class: "category-tag" %>
+                <% end %>
+              </dd>
+            </div>
+          <% end %>
+        </dl>
+
+        <div class="work-actions">
+          <p class="inquiry-prompt">Interested in a similar piece?</p>
+          <%= link_to "Inquire About a Commission", contact_path, class: "btn btn--primary btn--lg" %>
+        </div>
+      </div>
+    </div>
+
+    <% if @related_works.any? %>
+      <section class="related-works">
+        <h2>Related Works</h2>
+        <div class="grid grid--4">
+          <% @related_works.each do |work| %>
+            <%= render "works/card", work: work %>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,81 @@
+<header class="admin-page-header">
+  <div>
+    <h1>Inquiry from <%= @inquiry.name %></h1>
+    <span class="status-badge status-badge--<%= @inquiry.status %>">
+      <%= @inquiry.status.humanize %>
+    </span>
+  </div>
+  <div class="header-actions">
+    <% if @inquiry.new? %>
+      <%= button_to "Mark as Responded", mark_responded_admin_contact_inquiry_path(@inquiry), method: :patch, class: "btn btn--primary" %>
+    <% end %>
+    <%= link_to "Back", admin_contact_inquiries_path, class: "btn btn--ghost" %>
+  </div>
+</header>
+
+<div class="admin-detail-grid">
+  <div class="admin-detail-main">
+    <section class="admin-section">
+      <h3>Message</h3>
+      <% if @inquiry.subject.present? %>
+        <p><strong>Subject:</strong> <%= @inquiry.subject %></p>
+      <% end %>
+      <div class="prose message-content">
+        <%= simple_format(@inquiry.message) %>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h3>Admin Notes</h3>
+      <%= form_with model: [:admin, @inquiry], class: "notes-form" do |f| %>
+        <div class="form-group">
+          <%= f.text_area :admin_notes, class: "form-textarea", rows: 4, placeholder: "Add internal notes about this inquiry..." %>
+        </div>
+        <%= f.submit "Save Notes", class: "btn btn--ghost btn--sm" %>
+      <% end %>
+    </section>
+  </div>
+
+  <aside class="admin-detail-sidebar">
+    <div class="info-card">
+      <h3>Contact Info</h3>
+      <dl class="info-list">
+        <div class="info-item">
+          <dt>Name</dt>
+          <dd><%= @inquiry.name %></dd>
+        </div>
+        <div class="info-item">
+          <dt>Email</dt>
+          <dd><%= mail_to @inquiry.email %></dd>
+        </div>
+        <% if @inquiry.phone.present? %>
+          <div class="info-item">
+            <dt>Phone</dt>
+            <dd><%= @inquiry.phone %></dd>
+          </div>
+        <% end %>
+        <div class="info-item">
+          <dt>Received</dt>
+          <dd><%= @inquiry.formatted_date %></dd>
+        </div>
+        <% if @inquiry.responded_at %>
+          <div class="info-item">
+            <dt>Responded</dt>
+            <dd><%= @inquiry.responded_at.strftime("%B %d, %Y") %></dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+
+    <div class="info-card">
+      <h3>Actions</h3>
+      <div class="quick-actions-list">
+        <%= link_to "Reply via Email", "mailto:#{@inquiry.email}?subject=Re: #{@inquiry.subject}", class: "btn btn--primary btn--full btn--sm" %>
+        <% unless @inquiry.archived? %>
+          <%= button_to "Archive", archive_admin_contact_inquiry_path(@inquiry), method: :patch, class: "btn btn--ghost btn--full btn--sm" %>
+        <% end %>
+        <%= button_to "Delete", admin_contact_inquiry_path(@inquiry), method: :delete, class: "btn btn--danger btn--full btn--sm", data: { turbo_confirm: "Delete this inquiry permanently?" } %>
+      </div>
+    </div>
+  </aside>
+</div>

@@ -1,0 +1,48 @@
+<header class="site-header" data-controller="navigation">
+  <nav class="main-nav" aria-label="Main navigation">
+    <div class="nav-container">
+      <%= link_to root_path, class: "logo", "aria-label": "Coco's Stained Glass - Home" do %>
+        <span class="logo-icon">◇</span>
+        <span class="logo-text">Coco's Stained Glass</span>
+      <% end %>
+
+      <button class="nav-toggle" 
+              data-action="click->navigation#toggle" 
+              data-navigation-target="toggle"
+              aria-expanded="false"
+              aria-controls="primary-menu"
+              aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <div class="nav-menu" id="primary-menu" data-navigation-target="menu">
+        <ul class="nav-links">
+          <li>
+            <%= link_to "Gallery", works_path, class: "nav-link #{'active' if controller_name == 'works'}" %>
+          </li>
+          <li>
+            <%= link_to "About", about_path, class: "nav-link #{'active' if current_page?(about_path)}" %>
+          </li>
+          <li>
+            <%= link_to "Contact", contact_path, class: "nav-link #{'active' if controller_name == 'contact_inquiries'}" %>
+          </li>
+        </ul>
+
+        <div class="nav-auth">
+          <% if user_signed_in? %>
+            <% if current_user.admin? %>
+              <%= link_to "Admin", admin_root_path, class: "nav-link nav-link--admin" %>
+            <% else %>
+              <%= link_to "My Projects", portal_dashboard_path, class: "nav-link nav-link--portal" %>
+            <% end %>
+            <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn--ghost btn--sm" %>
+          <% else %>
+            <%= link_to "Client Login", new_user_session_path, class: "btn btn--ghost btn--sm" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

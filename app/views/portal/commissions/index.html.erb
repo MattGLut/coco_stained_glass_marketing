@@ -1,0 +1,20 @@
+<% set_meta_tags title: "My Commissions" %>
+
+<section class="portal-section">
+  <h2>All Commissions</h2>
+  
+  <% if @commissions.any? %>
+    <div class="commissions-list">
+      <% @commissions.each do |commission| %>
+        <%= render "portal/commissions/card", commission: commission %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <span class="empty-state-icon">◇</span>
+      <h3>No commissions yet</h3>
+      <p>When you have a commission, you'll be able to track its progress here.</p>
+      <%= link_to "Inquire About a Commission", contact_path, class: "btn btn--primary" %>
+    </div>
+  <% end %>
+</section>

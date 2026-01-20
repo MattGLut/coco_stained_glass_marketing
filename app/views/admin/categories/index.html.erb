@@ -1,0 +1,50 @@
+<header class="admin-page-header">
+  <div>
+    <h1>Categories</h1>
+    <p class="admin-page-subtitle">Organize your gallery works</p>
+  </div>
+  <%= link_to "Add Category", new_admin_category_path, class: "btn btn--primary" %>
+</header>
+
+<% if @categories.any? %>
+  <div class="admin-table-container">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Works</th>
+          <th>Position</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td>
+              <strong><%= link_to category.name, admin_category_path(category) %></strong>
+              <% if category.description.present? %>
+                <br><small class="text-muted"><%= truncate(category.description, length: 60) %></small>
+              <% end %>
+            </td>
+            <td><%= category.works.count %></td>
+            <td><%= category.position %></td>
+            <td class="table-actions">
+              <%= link_to "Edit", edit_admin_category_path(category), class: "action-link" %>
+              <%= button_to "Delete", admin_category_path(category), 
+                  method: :delete, 
+                  class: "action-link action-link--danger",
+                  data: { turbo_confirm: "Delete this category?" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="empty-state">
+    <span class="empty-state-icon">📁</span>
+    <h3>No categories yet</h3>
+    <p>Create categories to organize your gallery works.</p>
+    <%= link_to "Add Category", new_admin_category_path, class: "btn btn--primary" %>
+  </div>
+<% end %>

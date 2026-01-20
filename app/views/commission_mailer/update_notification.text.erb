@@ -1,0 +1,17 @@
+Update on Your Commission
+=========================
+
+Hi <%= @customer.first_name %>,
+
+There's a new update on your commission "<%= @commission.title %>".
+
+<%= @update.title %>
+<%= @update.body %>
+<%= @update.formatted_date %>
+
+<% if @update.has_images? %>This update includes progress photos. View them in your dashboard.<% end %>
+
+View Full Details: <%= portal_commission_url(@commission) %>
+
+Thank you for your patience!
+Coco's Stained Glass

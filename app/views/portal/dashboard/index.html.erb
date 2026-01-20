@@ -1,0 +1,32 @@
+<% if @active_commissions.any? %>
+  <section class="portal-section">
+    <h2 class="portal-section-title">Active Projects</h2>
+    
+    <div class="commissions-list">
+      <% @active_commissions.each do |commission| %>
+        <%= render "portal/commissions/card", commission: commission %>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+
+<% if @completed_commissions.any? %>
+  <section class="portal-section">
+    <h2 class="portal-section-title">Completed Projects</h2>
+    
+    <div class="commissions-list">
+      <% @completed_commissions.each do |commission| %>
+        <%= render "portal/commissions/card", commission: commission %>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+
+<% if @commissions.empty? %>
+  <div class="empty-state">
+    <span class="empty-state-icon">◇</span>
+    <h3>No commissions yet</h3>
+    <p>When you have an active commission, you'll be able to track its progress here.</p>
+    <%= link_to "Inquire About a Commission", contact_path, class: "btn btn--primary" %>
+  </div>
+<% end %>

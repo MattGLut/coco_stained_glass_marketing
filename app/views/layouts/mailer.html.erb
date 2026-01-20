@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coco's Stained Glass</title>
+    <style>
+      /* Reset */
+      body, table, td, p, a, li, blockquote {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      table, td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+        border: 0;
+        outline: none;
+        text-decoration: none;
+      }
+
+      /* Base */
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background-color: #1a1a2e;
+        font-family: Georgia, serif;
+      }
+
+      .email-wrapper {
+        width: 100%;
+        background-color: #1a1a2e;
+        padding: 40px 20px;
+      }
+
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #16213e;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(232, 168, 56, 0.2);
+      }
+
+      .email-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 30px;
+        text-align: center;
+        border-bottom: 1px solid rgba(232, 168, 56, 0.2);
+      }
+
+      .logo-icon {
+        font-size: 32px;
+        color: #e8a838;
+        margin-bottom: 10px;
+      }
+
+      .logo-text {
+        color: #f8f5f0;
+        font-size: 24px;
+        font-weight: normal;
+        margin: 0;
+      }
+
+      .email-body {
+        padding: 40px 30px;
+        color: #f8f5f0;
+        line-height: 1.6;
+      }
+
+      .email-body h1 {
+        color: #f8f5f0;
+        font-size: 28px;
+        font-weight: normal;
+        margin: 0 0 20px 0;
+      }
+
+      .email-body h2 {
+        color: #e8a838;
+        font-size: 20px;
+        font-weight: normal;
+        margin: 30px 0 15px 0;
+      }
+
+      .email-body p {
+        color: #a8a8b3;
+        margin: 0 0 15px 0;
+      }
+
+      .email-body a {
+        color: #e8a838;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 14px 28px;
+        background-color: #e8a838;
+        color: #0f0f1a !important;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+
+      .info-box {
+        background-color: rgba(232, 168, 56, 0.1);
+        border-left: 4px solid #e8a838;
+        padding: 15px 20px;
+        margin: 20px 0;
+        border-radius: 0 4px 4px 0;
+      }
+
+      .info-box p {
+        margin: 5px 0;
+        color: #f8f5f0;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .status-badge.inquiry { background: rgba(123, 94, 167, 0.3); color: #b794d4; }
+      .status-badge.in-progress { background: rgba(61, 139, 122, 0.3); color: #6fc9b4; }
+      .status-badge.completed { background: rgba(61, 139, 122, 0.4); color: #8fd4c4; }
+
+      .email-footer {
+        padding: 30px;
+        text-align: center;
+        border-top: 1px solid rgba(248, 245, 240, 0.1);
+      }
+
+      .email-footer p {
+        color: #4a4a5a;
+        font-size: 12px;
+        margin: 5px 0;
+      }
+
+      .email-footer a {
+        color: #a8a8b3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="email-wrapper">
+      <div class="email-container">
+        <div class="email-header">
+          <div class="logo-icon">◇</div>
+          <h1 class="logo-text">Coco's Stained Glass</h1>
+        </div>
+
+        <div class="email-body">
+          <%= yield %>
+        </div>
+
+        <div class="email-footer">
+          <p>© <%= Date.current.year %> Coco's Stained Glass</p>
+          <p>Handcrafted with light and love</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

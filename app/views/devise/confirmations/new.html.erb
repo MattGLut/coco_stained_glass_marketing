@@ -1,0 +1,28 @@
+<% set_meta_tags title: "Resend Confirmation" %>
+
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-header">
+      <span class="auth-icon">◇</span>
+      <h1 class="auth-title">Resend Confirmation</h1>
+      <p class="auth-subtitle">We'll send you a new confirmation email</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: "auth-form" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-group">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input", placeholder: "your@email.com" %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Resend Confirmation", class: "btn btn--primary btn--lg btn--full" %>
+      </div>
+    <% end %>
+
+    <div class="auth-footer">
+      <p>Already confirmed? <%= link_to "Sign in", new_session_path(resource_name) %></p>
+    </div>
+  </div>
+</div>

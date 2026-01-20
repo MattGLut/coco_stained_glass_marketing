@@ -1,0 +1,35 @@
+<% flash.each do |type, message| %>
+  <% css_class = case type.to_sym
+                 when :notice, :success then "flash--success"
+                 when :alert, :error then "flash--error"
+                 when :warning then "flash--warning"
+                 else "flash--info"
+                 end %>
+  
+  <div class="flash <%= css_class %>" 
+       role="alert"
+       data-controller="flash"
+       data-flash-target="message">
+    <div class="flash-content">
+      <span class="flash-icon">
+        <% case type.to_sym %>
+        <% when :notice, :success %>
+          ✓
+        <% when :alert, :error %>
+          ✕
+        <% when :warning %>
+          ⚠
+        <% else %>
+          ℹ
+        <% end %>
+      </span>
+      <p class="flash-text"><%= message %></p>
+    </div>
+    <button type="button" 
+            class="flash-dismiss" 
+            data-action="click->flash#dismiss"
+            aria-label="Dismiss notification">
+      ×
+    </button>
+  </div>
+<% end %>

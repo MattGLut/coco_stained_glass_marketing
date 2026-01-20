@@ -1,0 +1,8 @@
+# Allow all crawlers
+User-agent: *
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /users/
+
+# Sitemap location
+Sitemap: https://stainedglass.com/sitemap.xml

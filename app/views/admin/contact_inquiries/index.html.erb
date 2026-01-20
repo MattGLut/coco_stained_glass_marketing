@@ -1,0 +1,58 @@
+<header class="admin-page-header">
+  <div>
+    <h1>Contact Inquiries</h1>
+    <p class="admin-page-subtitle">Messages from the contact form</p>
+  </div>
+</header>
+
+<div class="admin-filters">
+  <%= link_to "All", admin_contact_inquiries_path, class: "filter-btn #{params[:status].blank? ? 'active' : ''}" %>
+  <%= link_to "New", admin_contact_inquiries_path(status: "new"), class: "filter-btn #{params[:status] == 'new' ? 'active' : ''}" %>
+  <%= link_to "Responded", admin_contact_inquiries_path(status: "responded"), class: "filter-btn #{params[:status] == 'responded' ? 'active' : ''}" %>
+  <%= link_to "Archived", admin_contact_inquiries_path(status: "archived"), class: "filter-btn #{params[:status] == 'archived' ? 'active' : ''}" %>
+</div>
+
+<% if @inquiries.any? %>
+  <div class="admin-table-container">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th>Received</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @inquiries.each do |inquiry| %>
+          <tr class="<%= 'unread' if inquiry.new? %>">
+            <td>
+              <strong><%= inquiry.name %></strong><br>
+              <small><%= inquiry.email %></small>
+            </td>
+            <td><%= inquiry.subject.presence || truncate(inquiry.message, length: 50) %></td>
+            <td>
+              <span class="status-badge status-badge--<%= inquiry.status %>">
+                <%= inquiry.status.humanize %>
+              </span>
+            </td>
+            <td><%= time_ago_in_words(inquiry.created_at) %> ago</td>
+            <td class="table-actions">
+              <%= link_to "View", admin_contact_inquiry_path(inquiry), class: "action-link" %>
+              <% unless inquiry.archived? %>
+                <%= button_to "Archive", archive_admin_contact_inquiry_path(inquiry), method: :patch, class: "action-link" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="empty-state">
+    <span class="empty-state-icon">✉️</span>
+    <h3>No inquiries</h3>
+    <p>Contact form submissions will appear here.</p>
+  </div>
+<% end %>

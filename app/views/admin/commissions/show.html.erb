@@ -1,0 +1,170 @@
+<header class="admin-page-header">
+  <div>
+    <h1><%= @commission.title %></h1>
+    <span class="status-badge status-badge--lg <%= @commission.status_color_class %>">
+      <%= @commission.status_label %>
+    </span>
+  </div>
+  <div class="header-actions">
+    <%= link_to "Edit", edit_admin_commission_path(@commission), class: "btn btn--primary" %>
+    <%= link_to "Back", admin_commissions_path, class: "btn btn--ghost" %>
+  </div>
+</header>
+
+<div class="admin-detail-grid">
+  <div class="admin-detail-main">
+    <section class="admin-section">
+      <h3>Project Details</h3>
+      <% if @commission.description.present? %>
+        <div class="prose">
+          <%= simple_format(@commission.description) %>
+        </div>
+      <% end %>
+      
+      <% if @commission.customer_notes.present? %>
+        <h4>Customer Notes</h4>
+        <div class="prose">
+          <%= simple_format(@commission.customer_notes) %>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="admin-section">
+      <h3>Status Actions</h3>
+      <div class="status-actions">
+        <% @commission.aasm.events(permitted: true).each do |event| %>
+          <%= button_to event.name.to_s.humanize, 
+              transition_admin_commission_path(@commission, event: event.name),
+              method: :patch,
+              class: "btn btn--ghost btn--sm" %>
+        <% end %>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <div class="section-header-inline">
+        <h3>Updates</h3>
+      </div>
+      
+      <%= form_with model: [@commission, @new_update], url: admin_commission_updates_path(@commission), class: "update-form" do |f| %>
+        <div class="form-group">
+          <%= f.text_field :title, class: "form-input", placeholder: "Update title...", required: true %>
+        </div>
+        <div class="form-group">
+          <%= f.text_area :body, class: "form-textarea", rows: 3, placeholder: "Update details..." %>
+        </div>
+        <div class="form-row">
+          <label class="form-checkbox">
+            <%= f.check_box :visible_to_customer, checked: true %>
+            <span>Visible to customer</span>
+          </label>
+          <label class="form-checkbox">
+            <%= f.check_box :notify_customer, checked: true %>
+            <span>Send email notification</span>
+          </label>
+        </div>
+        <%= f.submit "Post Update", class: "btn btn--primary btn--sm" %>
+      <% end %>
+
+      <% if @updates.any? %>
+        <div class="timeline" style="margin-top: 2rem;">
+          <% @updates.each do |update| %>
+            <div class="timeline-item">
+              <time class="timeline-date"><%= update.formatted_date %></time>
+              <h4 class="timeline-title">
+                <%= update.title %>
+                <% unless update.visible_to_customer? %>
+                  <span class="badge badge--internal">Internal</span>
+                <% end %>
+              </h4>
+              <% if update.body.present? %>
+                <div class="timeline-content"><%= simple_format(update.body) %></div>
+              <% end %>
+              <div class="timeline-actions">
+                <%= link_to "Edit", edit_admin_commission_update_path(@commission, update), class: "action-link" %>
+                <%= button_to "Delete", admin_commission_update_path(@commission, update), method: :delete, class: "action-link action-link--danger", data: { turbo_confirm: "Delete this update?" } %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="empty-message" style="margin-top: 1rem;">No updates yet.</p>
+      <% end %>
+    </section>
+  </div>
+
+  <aside class="admin-detail-sidebar">
+    <div class="info-card">
+      <h3>Customer</h3>
+      <p><strong><%= @commission.customer_name %></strong></p>
+      <p><%= mail_to @commission.customer_email %></p>
+      <%= link_to "View Customer", admin_user_path(@commission.user), class: "btn btn--ghost btn--sm btn--full" %>
+    </div>
+
+    <div class="info-card">
+      <h3>Timeline</h3>
+      <dl class="info-list">
+        <div class="info-item">
+          <dt>Created</dt>
+          <dd><%= @commission.created_at.strftime("%b %d, %Y") %></dd>
+        </div>
+        <% if @commission.estimated_start_date %>
+          <div class="info-item">
+            <dt>Est. Start</dt>
+            <dd><%= @commission.estimated_start_date.strftime("%b %d, %Y") %></dd>
+          </div>
+        <% end %>
+        <% if @commission.actual_start_date %>
+          <div class="info-item">
+            <dt>Started</dt>
+            <dd><%= @commission.actual_start_date.strftime("%b %d, %Y") %></dd>
+          </div>
+        <% end %>
+        <% if @commission.estimated_completion_date %>
+          <div class="info-item">
+            <dt>Est. Completion</dt>
+            <dd class="<%= 'overdue' if @commission.overdue? %>">
+              <%= @commission.estimated_completion_date.strftime("%b %d, %Y") %>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+
+    <div class="info-card">
+      <h3>Pricing</h3>
+      <dl class="info-list">
+        <% if @commission.estimated_price %>
+          <div class="info-item">
+            <dt>Estimated</dt>
+            <dd><%= number_to_currency(@commission.estimated_price) %></dd>
+          </div>
+        <% end %>
+        <% if @commission.final_price %>
+          <div class="info-item">
+            <dt>Final</dt>
+            <dd><%= number_to_currency(@commission.final_price) %></dd>
+          </div>
+        <% end %>
+        <% if @commission.deposit_amount %>
+          <div class="info-item">
+            <dt>Deposit</dt>
+            <dd>
+              <%= number_to_currency(@commission.deposit_amount) %>
+              <% if @commission.deposit_paid? %>
+                <span class="paid-badge">Paid</span>
+              <% end %>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+
+    <% if @commission.internal_notes.present? %>
+      <div class="info-card">
+        <h3>Internal Notes</h3>
+        <p class="prose-sm"><%= simple_format(@commission.internal_notes) %></p>
+      </div>
+    <% end %>
+  </aside>
+</div>

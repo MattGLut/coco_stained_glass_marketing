@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= display_meta_tags site: "Admin — Coco's Stained Glass",
+                          separator: "—",
+                          reverse: true %>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="admin-body">
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="admin-sidebar-header">
+          <%= link_to admin_root_path, class: "admin-logo" do %>
+            <span class="logo-icon">◇</span>
+            <span class="logo-text">Admin</span>
+          <% end %>
+        </div>
+
+        <nav class="admin-nav-container">
+          <ul class="admin-nav">
+            <li class="admin-nav-item">
+              <%= link_to admin_root_path, class: "admin-nav-link #{'active' if controller_name == 'dashboard'}" do %>
+                <span class="nav-icon">📊</span>
+                Dashboard
+              <% end %>
+            </li>
+            <li class="admin-nav-item">
+              <%= link_to admin_works_path, class: "admin-nav-link #{'active' if controller_name == 'works'}" do %>
+                <span class="nav-icon">🎨</span>
+                Works
+              <% end %>
+            </li>
+            <li class="admin-nav-item">
+              <%= link_to admin_categories_path, class: "admin-nav-link #{'active' if controller_name == 'categories'}" do %>
+                <span class="nav-icon">📁</span>
+                Categories
+              <% end %>
+            </li>
+            <li class="admin-nav-item">
+              <%= link_to admin_commissions_path, class: "admin-nav-link #{'active' if controller_name == 'commissions'}" do %>
+                <span class="nav-icon">📋</span>
+                Commissions
+              <% end %>
+            </li>
+            <li class="admin-nav-item">
+              <%= link_to admin_contact_inquiries_path, class: "admin-nav-link #{'active' if controller_name == 'contact_inquiries'}" do %>
+                <span class="nav-icon">✉️</span>
+                Inquiries
+                <% pending_count = ContactInquiry.pending.count %>
+                <% if pending_count > 0 %>
+                  <span class="nav-badge"><%= pending_count %></span>
+                <% end %>
+              <% end %>
+            </li>
+            <li class="admin-nav-item">
+              <%= link_to admin_users_path, class: "admin-nav-link #{'active' if controller_name == 'users'}" do %>
+                <span class="nav-icon">👥</span>
+                Users
+              <% end %>
+            </li>
+          </ul>
+
+          <div class="admin-nav-footer">
+            <%= link_to root_path, class: "admin-nav-link" do %>
+              <span class="nav-icon">🌐</span>
+              View Site
+            <% end %>
+            <%= button_to destroy_user_session_path, method: :delete, class: "admin-nav-link admin-nav-link--logout" do %>
+              <span class="nav-icon">🚪</span>
+              Sign Out
+            <% end %>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="admin-content">
+        <%= render "shared/flash_messages" %>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

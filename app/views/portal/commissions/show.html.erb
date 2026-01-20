@@ -1,0 +1,136 @@
+<% set_meta_tags title: @commission.title %>
+
+<nav class="breadcrumb">
+  <%= link_to "Dashboard", portal_dashboard_path %> 
+  <span class="breadcrumb-separator">→</span>
+  <span><%= @commission.title %></span>
+</nav>
+
+<div class="commission-detail">
+  <header class="commission-header">
+    <div class="commission-header-top">
+      <h1 class="commission-title"><%= @commission.title %></h1>
+      <span class="status-badge status-badge--lg <%= @commission.status_color_class %>">
+        <%= @commission.status_label %>
+      </span>
+    </div>
+
+    <div class="commission-progress-large">
+      <div class="progress-bar progress-bar--lg">
+        <div class="progress-fill" style="width: <%= @commission.progress_percentage %>%;"></div>
+      </div>
+      <div class="progress-labels">
+        <span>Started</span>
+        <span><%= @commission.progress_percentage %>% Complete</span>
+        <span>Delivered</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="commission-content-grid">
+    <div class="commission-main">
+      <% if @commission.description.present? %>
+        <section class="commission-section">
+          <h2>Project Description</h2>
+          <div class="prose">
+            <%= simple_format(@commission.description) %>
+          </div>
+        </section>
+      <% end %>
+
+      <section class="commission-section">
+        <h2>Project Timeline</h2>
+        
+        <% if @updates.any? %>
+          <div class="timeline">
+            <% @updates.each do |update| %>
+              <div class="timeline-item">
+                <time class="timeline-date"><%= update.formatted_date %></time>
+                <h3 class="timeline-title"><%= update.title %></h3>
+                <% if update.body.present? %>
+                  <div class="timeline-content">
+                    <%= simple_format(update.body) %>
+                  </div>
+                <% end %>
+                <% if update.has_images? %>
+                  <div class="timeline-images">
+                    <% update.images.each do |image| %>
+                      <%= image_tag image.variant(:medium), alt: update.title, class: "timeline-image" %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="no-updates">No updates yet. Check back soon!</p>
+        <% end %>
+      </section>
+    </div>
+
+    <aside class="commission-sidebar">
+      <div class="commission-info-card">
+        <h3>Project Details</h3>
+        
+        <dl class="info-list">
+          <% if @commission.dimensions.present? %>
+            <div class="info-item">
+              <dt>Dimensions</dt>
+              <dd><%= @commission.dimensions %></dd>
+            </div>
+          <% end %>
+
+          <% if @commission.location.present? %>
+            <div class="info-item">
+              <dt>Installation Location</dt>
+              <dd><%= @commission.location %></dd>
+            </div>
+          <% end %>
+
+          <% if @commission.estimated_start_date %>
+            <div class="info-item">
+              <dt>Start Date</dt>
+              <dd><%= (@commission.actual_start_date || @commission.estimated_start_date).strftime("%B %d, %Y") %></dd>
+            </div>
+          <% end %>
+
+          <% if @commission.estimated_completion_date %>
+            <div class="info-item">
+              <dt>Est. Completion</dt>
+              <dd class="<%= 'overdue' if @commission.overdue? %>">
+                <%= @commission.estimated_completion_date.strftime("%B %d, %Y") %>
+              </dd>
+            </div>
+          <% end %>
+
+          <% if @commission.price_display %>
+            <div class="info-item">
+              <dt>Price</dt>
+              <dd><%= number_to_currency(@commission.price_display) %></dd>
+            </div>
+          <% end %>
+
+          <% if @commission.deposit_amount && @commission.deposit_amount > 0 %>
+            <div class="info-item">
+              <dt>Deposit</dt>
+              <dd>
+                <%= number_to_currency(@commission.deposit_amount) %>
+                <% if @commission.deposit_paid? %>
+                  <span class="paid-badge">Paid</span>
+                <% else %>
+                  <span class="unpaid-badge">Outstanding</span>
+                <% end %>
+              </dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+
+      <div class="commission-help-card">
+        <h3>Questions?</h3>
+        <p>If you have any questions about your project, don't hesitate to reach out.</p>
+        <%= link_to "Contact Us", contact_path, class: "btn btn--ghost btn--full" %>
+      </div>
+    </aside>
+  </div>
+</div>

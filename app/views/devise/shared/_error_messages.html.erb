@@ -1,0 +1,12 @@
+<% if resource.errors.any? %>
+  <div class="form-errors" role="alert">
+    <h4 class="form-errors-title">
+      <%= pluralize(resource.errors.count, "error") %> prevented this action:
+    </h4>
+    <ul class="form-errors-list">
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

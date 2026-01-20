@@ -1,0 +1,28 @@
+<% set_meta_tags title: "Unlock Account" %>
+
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-header">
+      <span class="auth-icon">◇</span>
+      <h1 class="auth-title">Unlock Your Account</h1>
+      <p class="auth-subtitle">We'll send you unlock instructions</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, class: "auth-form" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-group">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input", placeholder: "your@email.com" %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Send Unlock Instructions", class: "btn btn--primary btn--lg btn--full" %>
+      </div>
+    <% end %>
+
+    <div class="auth-footer">
+      <p>Remember your password? <%= link_to "Sign in", new_session_path(resource_name) %></p>
+    </div>
+  </div>
+</div>

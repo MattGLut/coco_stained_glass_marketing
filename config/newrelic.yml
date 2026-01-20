@@ -1,0 +1,76 @@
+# New Relic Ruby Agent Configuration
+#
+# See https://docs.newrelic.com/docs/agents/ruby-agent/configuration/ruby-agent-configuration
+# for a full list of configuration options.
+
+common: &default_settings
+  # Application name as it will appear in New Relic
+  app_name: Stained Glass Marketing
+
+  # License key - set via environment variable
+  license_key: <%= ENV["NEW_RELIC_LICENSE_KEY"] %>
+
+  # Logging
+  log_level: info
+  log_file_name: newrelic_agent.log
+
+  # High Security Mode
+  high_security: false
+
+  # Distributed tracing
+  distributed_tracing:
+    enabled: true
+
+  # Transaction tracer
+  transaction_tracer:
+    enabled: true
+    transaction_threshold: apdex_f
+    record_sql: obfuscated
+    stack_trace_threshold: 0.5
+
+  # Error collector
+  error_collector:
+    enabled: true
+    ignore_classes:
+      - ActionController::RoutingError
+      - ActionController::InvalidAuthenticityToken
+    ignore_messages:
+      ActionController::UnknownFormat:
+        - "%"
+
+  # Browser monitoring (Real User Monitoring)
+  browser_monitoring:
+    auto_instrument: true
+
+  # Application logging
+  application_logging:
+    enabled: true
+    forwarding:
+      enabled: true
+    metrics:
+      enabled: true
+    local_decorating:
+      enabled: false
+
+# Development environment - disabled by default
+development:
+  <<: *default_settings
+  monitor_mode: false
+  app_name: Stained Glass Marketing (Development)
+
+# Test environment - always disabled
+test:
+  <<: *default_settings
+  monitor_mode: false
+
+# Staging environment
+staging:
+  <<: *default_settings
+  monitor_mode: true
+  app_name: Stained Glass Marketing (Staging)
+
+# Production environment
+production:
+  <<: *default_settings
+  monitor_mode: true
+  app_name: Stained Glass Marketing

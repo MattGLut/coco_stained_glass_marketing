@@ -1,0 +1,98 @@
+<header class="admin-page-header">
+  <div>
+    <h1><%= @work.title %></h1>
+    <div class="header-meta">
+      <% if @work.published? %>
+        <span class="status-badge status-badge--published">Published</span>
+      <% else %>
+        <span class="status-badge status-badge--draft">Draft</span>
+      <% end %>
+      <% if @work.featured? %>
+        <span class="status-badge status-badge--featured">Featured</span>
+      <% end %>
+    </div>
+  </div>
+  <div class="header-actions">
+    <%= link_to "Edit", edit_admin_work_path(@work), class: "btn btn--primary" %>
+    <% if @work.published? %>
+      <%= link_to "View on Site", work_path(@work), class: "btn btn--ghost", target: "_blank" %>
+    <% end %>
+    <%= link_to "Back to Works", admin_works_path, class: "btn btn--ghost" %>
+  </div>
+</header>
+
+<div class="admin-detail-grid">
+  <div class="admin-detail-main">
+    <% if @work.has_images? %>
+      <div class="work-images">
+        <% @work.images.each do |image| %>
+          <div class="work-image">
+            <%= image_tag image.variant(:medium), alt: @work.title %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @work.description.present? %>
+      <section class="admin-section">
+        <h3>Description</h3>
+        <div class="prose">
+          <%= simple_format(@work.description) %>
+        </div>
+      </section>
+    <% end %>
+  </div>
+
+  <aside class="admin-detail-sidebar">
+    <div class="info-card">
+      <h3>Details</h3>
+      <dl class="info-list">
+        <% if @work.year_created %>
+          <div class="info-item">
+            <dt>Year</dt>
+            <dd><%= @work.year_created %></dd>
+          </div>
+        <% end %>
+        <% if @work.dimensions.present? %>
+          <div class="info-item">
+            <dt>Dimensions</dt>
+            <dd><%= @work.dimensions %></dd>
+          </div>
+        <% end %>
+        <% if @work.medium.present? %>
+          <div class="info-item">
+            <dt>Medium</dt>
+            <dd><%= @work.medium %></dd>
+          </div>
+        <% end %>
+        <% if @work.categories.any? %>
+          <div class="info-item">
+            <dt>Categories</dt>
+            <dd><%= @work.category_names %></dd>
+          </div>
+        <% end %>
+        <div class="info-item">
+          <dt>Created</dt>
+          <dd><%= @work.created_at.strftime("%B %d, %Y") %></dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="info-card">
+      <h3>Quick Actions</h3>
+      <div class="quick-actions-list">
+        <% if @work.published? %>
+          <%= button_to "Unpublish", unpublish_admin_work_path(@work), method: :patch, class: "btn btn--ghost btn--full btn--sm" %>
+        <% else %>
+          <%= button_to "Publish", publish_admin_work_path(@work), method: :patch, class: "btn btn--primary btn--full btn--sm" %>
+        <% end %>
+        
+        <% if @work.featured? %>
+          <%= button_to "Remove from Featured", unfeature_admin_work_path(@work), method: :patch, class: "btn btn--ghost btn--full btn--sm" %>
+        <% else %>
+          <%= button_to "Add to Featured", feature_admin_work_path(@work), method: :patch, class: "btn btn--ghost btn--full btn--sm" %>
+        <% end %>
+      </div>
+    </div>
+  </aside>
+</div>

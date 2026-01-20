@@ -1,0 +1,64 @@
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <span class="footer-logo">◇</span>
+      <span class="footer-name">Coco's Stained Glass</span>
+      <p class="footer-tagline">Transforming light into art</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <div class="footer-nav-section">
+        <h4>Explore</h4>
+        <ul>
+          <li><%= link_to "Gallery", works_path %></li>
+          <li><%= link_to "About", about_path %></li>
+          <li><%= link_to "Contact", contact_path %></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-section">
+        <h4>Client Area</h4>
+        <ul>
+          <% if user_signed_in? %>
+            <li><%= link_to "My Projects", portal_dashboard_path %></li>
+            <li><%= link_to "Account Settings", edit_user_registration_path %></li>
+          <% else %>
+            <li><%= link_to "Client Login", new_user_session_path %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="footer-nav-section">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:<%= ENV.fetch('DEFAULT_FROM_EMAIL', 'hello@stainedglass.com') %>">Email</a></li>
+          <%# Add social links as needed %>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        © <%= Date.current.year %> Coco's Stained Glass. All rights reserved.
+      </p>
+      <p class="footer-credits">
+        Handcrafted with light and love
+      </p>
+    </div>
+  </div>
+
+  <%# Structured data for organization %>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Coco's Stained Glass",
+      "url": "<%= root_url rescue 'https://stainedglass.com' %>",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "<%= ENV.fetch('DEFAULT_FROM_EMAIL', 'hello@stainedglass.com') %>"
+      }
+    }
+  </script>
+</footer>

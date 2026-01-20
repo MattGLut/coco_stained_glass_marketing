@@ -1,0 +1,15 @@
+New Contact Form Submission
+===========================
+
+You have a new inquiry from the website contact form.
+
+Name: <%= @inquiry.name %>
+Email: <%= @inquiry.email %>
+<% if @inquiry.phone.present? %>Phone: <%= @inquiry.phone %><% end %>
+<% if @inquiry.subject.present? %>Subject: <%= @inquiry.subject %><% end %>
+Received: <%= @inquiry.formatted_date %>
+
+Message:
+<%= @inquiry.message %>
+
+View in Admin: <%= admin_contact_inquiry_url(@inquiry) %>

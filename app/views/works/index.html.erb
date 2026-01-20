@@ -1,0 +1,47 @@
+<% content_for :head do %>
+  <%= tag.link rel: "canonical", href: works_url %>
+<% end %>
+
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-title">Gallery</h1>
+    <p class="page-subtitle">Explore our collection of handcrafted stained glass art</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <% if @categories.any? %>
+      <nav class="gallery-filters" aria-label="Filter by category">
+        <ul class="filter-list">
+          <li>
+            <%= link_to "All", works_path, 
+                class: "filter-link #{params[:category].blank? ? 'active' : ''}" %>
+          </li>
+          <% @categories.each do |category| %>
+            <li>
+              <%= link_to category.name, works_path(category: category.id),
+                  class: "filter-link #{params[:category].to_s == category.id.to_s ? 'active' : ''}" %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    <% end %>
+
+    <% if @works.any? %>
+      <div class="gallery-grid">
+        <% @works.each do |work| %>
+          <%= render "works/card", work: work %>
+        <% end %>
+      </div>
+
+      <nav class="pagination-nav" aria-label="Gallery pagination">
+        <%== @pagy.series_nav if @pagy.pages > 1 %>
+      </nav>
+    <% else %>
+      <div class="empty-state">
+        <p>No works found. Check back soon for new creations!</p>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,115 @@
+<% content_for :head do %>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Coco's Stained Glass - Handcrafted Art",
+      "description": "Discover the beauty of handcrafted stained glass art and custom commissions.",
+      "mainEntity": {
+        "@type": "LocalBusiness",
+        "name": "Coco's Stained Glass",
+        "description": "Custom stained glass art and commissions"
+      }
+    }
+  </script>
+<% end %>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Light Transformed<br>Into Art</h1>
+    <p class="hero-subtitle">
+      Handcrafted stained glass pieces that bring warmth, color, and beauty to your space.
+      Each creation is a unique work of art, designed to capture and transform light.
+    </p>
+    <div class="hero-actions">
+      <%= link_to "View Gallery", works_path, class: "btn btn--primary btn--lg" %>
+      <%= link_to "Commission a Piece", contact_path, class: "btn btn--ghost btn--lg" %>
+    </div>
+  </div>
+</section>
+
+<% if @featured_works.any? %>
+  <section class="section">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="section-title">Featured Works</h2>
+        <p class="section-subtitle">A selection of our finest stained glass creations</p>
+      </header>
+
+      <div class="grid grid--3">
+        <% @featured_works.each do |work| %>
+          <%= render "works/card", work: work %>
+        <% end %>
+      </div>
+
+      <div class="section-cta">
+        <%= link_to "View Full Gallery", works_path, class: "btn btn--ghost btn--lg" %>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<section class="section section--highlight">
+  <div class="container">
+    <div class="about-preview">
+      <div class="about-preview-content">
+        <h2>The Art of Stained Glass</h2>
+        <p>
+          Every piece begins with a vision and transforms into a window of color and light.
+          Using traditional techniques passed down through generations, each creation is
+          meticulously crafted by hand—cutting, grinding, fitting, and soldering each
+          piece of glass with care and precision.
+        </p>
+        <p>
+          From custom windows and panels to decorative art pieces, we bring your vision
+          to life in glass.
+        </p>
+        <%= link_to "Learn More About Our Process", about_path, class: "btn btn--ghost" %>
+      </div>
+      <div class="about-preview-image">
+        <div class="glass-pattern">
+          <span class="glass-piece glass-piece--amber"></span>
+          <span class="glass-piece glass-piece--rose"></span>
+          <span class="glass-piece glass-piece--jade"></span>
+          <span class="glass-piece glass-piece--amethyst"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container container--narrow">
+    <header class="section-header">
+      <h2 class="section-title">Commission Your Own</h2>
+      <p class="section-subtitle">
+        Have a vision for a custom stained glass piece? Let's bring it to life together.
+      </p>
+    </header>
+
+    <div class="commission-cta">
+      <div class="commission-cta-content">
+        <h3>How It Works</h3>
+        <ol class="process-steps">
+          <li>
+            <span class="step-number">1</span>
+            <span class="step-text">Share your vision and requirements with us</span>
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            <span class="step-text">Receive a detailed quote and timeline</span>
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            <span class="step-text">Track your project's progress online</span>
+          </li>
+          <li>
+            <span class="step-number">4</span>
+            <span class="step-text">Receive your unique piece of art</span>
+          </li>
+        </ol>
+        <%= link_to "Start Your Commission", contact_path, class: "btn btn--primary btn--lg" %>
+      </div>
+    </div>
+  </div>
+</section>

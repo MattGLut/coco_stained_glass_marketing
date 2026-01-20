@@ -1,0 +1,20 @@
+<h1>New Contact Form Submission</h1>
+
+<p>You have a new inquiry from the website contact form.</p>
+
+<div class="info-box">
+  <p><strong>Name:</strong> <%= @inquiry.name %></p>
+  <p><strong>Email:</strong> <%= mail_to @inquiry.email %></p>
+  <% if @inquiry.phone.present? %>
+    <p><strong>Phone:</strong> <%= @inquiry.phone %></p>
+  <% end %>
+  <% if @inquiry.subject.present? %>
+    <p><strong>Subject:</strong> <%= @inquiry.subject %></p>
+  <% end %>
+  <p><strong>Received:</strong> <%= @inquiry.formatted_date %></p>
+</div>
+
+<h2>Message</h2>
+<p><%= simple_format(@inquiry.message) %></p>
+
+<%= link_to "View in Admin", admin_contact_inquiry_url(@inquiry), class: "btn" %>

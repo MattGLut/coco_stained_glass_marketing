@@ -1,0 +1,132 @@
+<%= form_with model: [:admin, @work], class: "admin-form" do |f| %>
+  <% if @work.errors.any? %>
+    <div class="form-errors">
+      <h4><%= pluralize(@work.errors.count, "error") %> prevented saving:</h4>
+      <ul>
+        <% @work.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-grid">
+    <div class="form-main">
+      <div class="form-card">
+        <h3>Basic Information</h3>
+
+        <div class="form-group">
+          <%= f.label :title, class: "form-label" %>
+          <%= f.text_field :title, class: "form-input", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :description, class: "form-label" %>
+          <%= f.text_area :description, class: "form-textarea", rows: 6 %>
+          <span class="form-hint">Describe the piece, inspiration, and techniques used.</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <%= f.label :dimensions, class: "form-label" %>
+            <%= f.text_field :dimensions, class: "form-input", placeholder: "e.g., 24\" x 36\"" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :year_created, class: "form-label" %>
+            <%= f.number_field :year_created, class: "form-input", min: 1900, max: Date.current.year %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :medium, class: "form-label" %>
+          <%= f.text_field :medium, class: "form-input", placeholder: "e.g., Stained glass, lead came" %>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Images</h3>
+
+        <% if @work.persisted? && @work.images.attached? %>
+          <div class="current-images">
+            <p class="form-label">Current Images</p>
+            <div class="image-grid">
+              <% @work.images.each do |image| %>
+                <div class="image-item">
+                  <%= image_tag image.variant(:thumb), alt: "Work image" %>
+                  <%= button_to "Remove", remove_image_admin_work_path(@work, image_id: image.id), 
+                      method: :delete,
+                      class: "image-remove-btn",
+                      data: { turbo_confirm: "Remove this image?" } %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.label :images, "Add Images", class: "form-label" %>
+          <%= f.file_field :images, multiple: true, accept: "image/*", class: "form-file-input" %>
+          <span class="form-hint">Upload one or more images. First image will be the primary image.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-sidebar">
+      <div class="form-card">
+        <h3>Categories</h3>
+        
+        <div class="checkbox-group">
+          <% @categories.each do |category| %>
+            <label class="checkbox-label">
+              <%= f.check_box :category_ids, { multiple: true, checked: @work.category_ids.include?(category.id) }, category.id, nil %>
+              <%= category.name %>
+            </label>
+          <% end %>
+        </div>
+
+        <% if @categories.empty? %>
+          <p class="form-hint">No categories yet. <%= link_to "Create one", new_admin_category_path %>.</p>
+        <% end %>
+      </div>
+
+      <div class="form-card">
+        <h3>Publishing</h3>
+
+        <div class="form-group">
+          <label class="toggle-label">
+            <%= f.check_box :published, class: "toggle-input" %>
+            <span class="toggle-text">Published</span>
+          </label>
+          <span class="form-hint">Published works appear in the public gallery.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="toggle-label">
+            <%= f.check_box :featured, class: "toggle-input" %>
+            <span class="toggle-text">Featured</span>
+          </label>
+          <span class="form-hint">Featured works appear on the homepage.</span>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :position, "Display Order", class: "form-label" %>
+          <%= f.number_field :position, class: "form-input", min: 0 %>
+          <span class="form-hint">Lower numbers appear first.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit @work.persisted? ? "Update Work" : "Create Work", class: "btn btn--primary btn--lg" %>
+    <%= link_to "Cancel", admin_works_path, class: "btn btn--ghost btn--lg" %>
+    
+    <% if @work.persisted? %>
+      <%= button_to "Delete", admin_work_path(@work), 
+          method: :delete,
+          class: "btn btn--danger",
+          data: { turbo_confirm: "Are you sure you want to delete this work?" } %>
+    <% end %>
+  </div>
+<% end %>

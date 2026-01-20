@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= display_meta_tags site: "Coco's Stained Glass",
+                          separator: "—",
+                          reverse: true,
+                          description: "Handcrafted stained glass art and custom commissions. Transform your space with light and color.",
+                          keywords: "stained glass, custom art, glass art, commissions, handcrafted, windows, panels",
+                          og: {
+                            type: "website",
+                            site_name: "Coco's Stained Glass"
+                          },
+                          twitter: {
+                            card: "summary_large_image"
+                          } %>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Coco's Stained Glass">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1a1a2e">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Structured Data for Local Business %>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Coco's Stained Glass",
+        "description": "Handcrafted stained glass art and custom commissions",
+        "@id": "<%= root_url rescue 'https://stainedglass.com' %>",
+        "url": "<%= root_url rescue 'https://stainedglass.com' %>",
+        "image": "<%= image_url('og-default.jpg') rescue '' %>",
+        "priceRange": "$$",
+        "makesOffer": {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Custom Stained Glass Commissions"
+          }
+        }
+      }
+    </script>
+
+    <%# Preconnect to external origins %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <%# Typography: Distinctive fonts %>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Canonical URL %>
+    <%= yield :canonical %>
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="<%= controller_name %> <%= action_name %>">
+    <%= render "shared/navigation" %>
+
+    <main id="main-content">
+      <%= render "shared/flash_messages" %>
+      <%= yield %>
+    </main>
+
+    <%= render "shared/footer" %>
+  </body>
+</html>

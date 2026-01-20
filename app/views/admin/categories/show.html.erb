@@ -1,0 +1,55 @@
+<header class="admin-page-header">
+  <div>
+    <h1><%= @category.name %></h1>
+    <p class="admin-page-subtitle"><%= @category.description %></p>
+  </div>
+  <div class="header-actions">
+    <%= link_to "Edit", edit_admin_category_path(@category), class: "btn btn--ghost" %>
+    <%= link_to "Back to Categories", admin_categories_path, class: "btn btn--ghost" %>
+  </div>
+</header>
+
+<section class="admin-section">
+  <h2>Works in this Category (<%= @works.count %>)</h2>
+  
+  <% if @works.any? %>
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @works.each do |work| %>
+            <tr>
+              <td class="table-image">
+                <% if work.has_images? %>
+                  <%= image_tag work.primary_image.variant(:thumb), alt: work.title %>
+                <% else %>
+                  <div class="image-placeholder">◇</div>
+                <% end %>
+              </td>
+              <td><%= link_to work.title, admin_work_path(work) %></td>
+              <td>
+                <% if work.published? %>
+                  <span class="status-dot status-dot--published"></span> Published
+                <% else %>
+                  <span class="status-dot status-dot--draft"></span> Draft
+                <% end %>
+              </td>
+              <td class="table-actions">
+                <%= link_to "Edit", edit_admin_work_path(work), class: "action-link" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="empty-message">No works in this category yet.</p>
+  <% end %>
+</section>

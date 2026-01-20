@@ -1,0 +1,41 @@
+<% set_meta_tags title: "Sign In" %>
+
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-header">
+      <span class="auth-icon">◇</span>
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-subtitle">Sign in to view your commission progress</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-group">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input", placeholder: "your@email.com" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password, class: "form-label" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "form-input", placeholder: "Your password" %>
+      </div>
+
+      <div class="form-group form-group--inline">
+        <label class="form-checkbox">
+          <%= f.check_box :remember_me %>
+          <span>Remember me</span>
+        </label>
+        <%= link_to "Forgot password?", new_password_path(resource_name), class: "form-link" %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Sign In", class: "btn btn--primary btn--lg btn--full" %>
+      </div>
+    <% end %>
+
+    <div class="auth-footer">
+      <p>Don't have an account? <%= link_to "Create one", new_registration_path(resource_name) %></p>
+    </div>
+  </div>
+</div>

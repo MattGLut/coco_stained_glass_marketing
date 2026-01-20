@@ -1,0 +1,101 @@
+<header class="admin-page-header">
+  <h1>Dashboard</h1>
+  <p class="admin-page-subtitle">Welcome back, <%= current_user.first_name %></p>
+</header>
+
+<div class="dashboard-stats">
+  <div class="stat-card">
+    <div class="stat-value"><%= @pending_inquiries_count %></div>
+    <div class="stat-label">Pending Inquiries</div>
+    <%= link_to "View all", admin_contact_inquiries_path(status: "new"), class: "stat-link" %>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-value"><%= @active_commissions_count %></div>
+    <div class="stat-label">Active Commissions</div>
+    <%= link_to "View all", admin_commissions_path, class: "stat-link" %>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-value"><%= @works_count %></div>
+    <div class="stat-label">Gallery Works</div>
+    <%= link_to "Manage", admin_works_path, class: "stat-link" %>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-value"><%= @users_count %></div>
+    <div class="stat-label">Customers</div>
+    <%= link_to "View all", admin_users_path, class: "stat-link" %>
+  </div>
+</div>
+
+<div class="dashboard-grid">
+  <section class="dashboard-section">
+    <header class="section-header-admin">
+      <h2>Recent Inquiries</h2>
+      <%= link_to "View All", admin_contact_inquiries_path, class: "section-link" %>
+    </header>
+
+    <% if @recent_inquiries.any? %>
+      <div class="admin-list">
+        <% @recent_inquiries.each do |inquiry| %>
+          <div class="admin-list-item">
+            <div class="list-item-main">
+              <strong><%= inquiry.name %></strong>
+              <span class="list-item-meta"><%= inquiry.email %></span>
+            </div>
+            <div class="list-item-side">
+              <span class="status-badge status-badge--<%= inquiry.status %>"><%= inquiry.status %></span>
+              <span class="list-item-date"><%= time_ago_in_words(inquiry.created_at) %> ago</span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-message">No inquiries yet.</p>
+    <% end %>
+  </section>
+
+  <section class="dashboard-section">
+    <header class="section-header-admin">
+      <h2>Commission Status</h2>
+      <%= link_to "View All", admin_commissions_path, class: "section-link" %>
+    </header>
+
+    <% if @commissions_by_status.any? %>
+      <div class="status-breakdown">
+        <% @commissions_by_status.each do |status, count| %>
+          <div class="status-row">
+            <span class="status-name"><%= status.humanize %></span>
+            <span class="status-count"><%= count %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-message">No commissions yet.</p>
+    <% end %>
+  </section>
+</div>
+
+<section class="dashboard-section dashboard-section--full">
+  <header class="section-header-admin">
+    <h2>Quick Actions</h2>
+  </header>
+
+  <div class="quick-actions">
+    <%= link_to new_admin_work_path, class: "quick-action" do %>
+      <span class="quick-action-icon">➕</span>
+      <span class="quick-action-text">Add New Work</span>
+    <% end %>
+
+    <%= link_to new_admin_commission_path, class: "quick-action" do %>
+      <span class="quick-action-icon">📋</span>
+      <span class="quick-action-text">New Commission</span>
+    <% end %>
+
+    <%= link_to admin_contact_inquiries_path(status: "new"), class: "quick-action" do %>
+      <span class="quick-action-icon">✉️</span>
+      <span class="quick-action-text">Review Inquiries</span>
+    <% end %>
+  </div>
+</section>

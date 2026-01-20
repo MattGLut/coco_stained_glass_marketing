@@ -1,0 +1,77 @@
+# frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: contact_inquiries
+#
+#  id           :bigint           not null, primary key
+#  name         :string           not null
+#  email        :string           not null
+#  phone        :string
+#  subject      :string
+#  message      :text             not null
+#  status       :string           default("new"), not null
+#  admin_notes  :text
+#  responded_at :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+class ContactInquiry < ApplicationRecord
+  # =============================================================================
+  # Enums
+  # =============================================================================
+  enum :status, { pending: "pending", responded: "responded", archived: "archived" }, default: :pending
+
+  # =============================================================================
+  # Validations
+  # =============================================================================
+  validates :name, presence: true, length: { maximum: 100 }
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :phone, length: { maximum: 20 }
+  validates :subject, length: { maximum: 200 }
+  validates :message, presence: true, length: { minimum: 10, maximum: 5000 }
+  validates :admin_notes, length: { maximum: 2000 }
+
+  # =============================================================================
+  # Scopes
+  # =============================================================================
+  scope :recent, -> { order(created_at: :desc) }
+  scope :pending, -> { where(status: :new) }
+  scope :unread, -> { where(status: :new) }
+
+  # =============================================================================
+  # Callbacks
+  # =============================================================================
+  after_create :send_confirmation
+  after_create :notify_admin
+
+  # =============================================================================
+  # Instance Methods
+  # =============================================================================
+  def mark_as_responded!
+    update(status: :responded, responded_at: Time.current)
+  end
+
+  def mark_as_archived!
+    update(status: :archived)
+  end
+
+  def response_time
+    return nil unless responded_at
+    responded_at - created_at
+  end
+
+  def formatted_date
+    created_at.strftime("%B %d, %Y at %I:%M %p")
+  end
+
+  private
+
+  def send_confirmation
+    ContactMailer.confirmation(self).deliver_later
+  end
+
+  def notify_admin
+    ContactMailer.admin_notification(self).deliver_later
+  end
+end

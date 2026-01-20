@@ -1,0 +1,46 @@
+<article class="commission-card">
+  <%= link_to portal_commission_path(commission), class: "commission-card-link" do %>
+    <div class="commission-card-header">
+      <h3 class="commission-card-title"><%= commission.title %></h3>
+      <span class="status-badge <%= commission.status_color_class %>">
+        <%= commission.status_label %>
+      </span>
+    </div>
+
+    <div class="commission-card-body">
+      <div class="commission-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: <%= commission.progress_percentage %>%;"></div>
+        </div>
+        <span class="progress-label"><%= commission.progress_percentage %>% complete</span>
+      </div>
+
+      <div class="commission-meta">
+        <% if commission.estimated_completion_date %>
+          <div class="meta-item">
+            <span class="meta-label">Est. Completion</span>
+            <span class="meta-value <%= 'overdue' if commission.overdue? %>">
+              <%= commission.estimated_completion_date.strftime("%B %d, %Y") %>
+              <% if commission.overdue? %>
+                <span class="overdue-badge">Overdue</span>
+              <% end %>
+            </span>
+          </div>
+        <% end %>
+
+        <% if commission.commission_updates.visible_to_customer.any? %>
+          <div class="meta-item">
+            <span class="meta-label">Last Update</span>
+            <span class="meta-value">
+              <%= commission.visible_updates.first.created_at.strftime("%B %d, %Y") %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="commission-card-footer">
+      <span class="view-details">View Details →</span>
+    </div>
+  <% end %>
+</article>

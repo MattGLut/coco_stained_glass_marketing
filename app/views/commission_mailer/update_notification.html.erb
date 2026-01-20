@@ -1,0 +1,22 @@
+<h1>Update on Your Commission</h1>
+
+<p>Hi <%= @customer.first_name %>,</p>
+
+<p>There's a new update on your commission "<strong><%= @commission.title %></strong>".</p>
+
+<div class="info-box">
+  <p><strong><%= @update.title %></strong></p>
+  <p><%= simple_format(@update.body) %></p>
+  <p><em><%= @update.formatted_date %></em></p>
+</div>
+
+<% if @update.has_images? %>
+  <p><em>This update includes progress photos. View them in your dashboard.</em></p>
+<% end %>
+
+<%= link_to "View Full Details", portal_commission_url(@commission), class: "btn" %>
+
+<p>
+  Thank you for your patience!<br>
+  <strong>Coco's Stained Glass</strong>
+</p>

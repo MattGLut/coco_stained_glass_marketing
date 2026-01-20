@@ -1,0 +1,69 @@
+<header class="admin-page-header">
+  <div>
+    <h1>Works</h1>
+    <p class="admin-page-subtitle">Manage your gallery portfolio</p>
+  </div>
+  <%= link_to "Add New Work", new_admin_work_path, class: "btn btn--primary" %>
+</header>
+
+<div class="admin-filters">
+  <%= link_to "All", admin_works_path, class: "filter-btn #{params[:status].blank? ? 'active' : ''}" %>
+  <%= link_to "Published", admin_works_path(status: "published"), class: "filter-btn #{params[:status] == 'published' ? 'active' : ''}" %>
+  <%= link_to "Drafts", admin_works_path(status: "draft"), class: "filter-btn #{params[:status] == 'draft' ? 'active' : ''}" %>
+</div>
+
+<% if @works.any? %>
+  <div class="admin-table-container">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Categories</th>
+          <th>Year</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @works.each do |work| %>
+          <tr>
+            <td class="table-image">
+              <% if work.has_images? %>
+                <%= image_tag work.primary_image.variant(:thumb), alt: work.title %>
+              <% else %>
+                <div class="image-placeholder">◇</div>
+              <% end %>
+            </td>
+            <td>
+              <strong><%= link_to work.title, admin_work_path(work) %></strong>
+              <% if work.featured? %>
+                <span class="badge badge--featured">Featured</span>
+              <% end %>
+            </td>
+            <td><%= work.category_names.presence || "—" %></td>
+            <td><%= work.year_created || "—" %></td>
+            <td>
+              <% if work.published? %>
+                <span class="status-dot status-dot--published"></span> Published
+              <% else %>
+                <span class="status-dot status-dot--draft"></span> Draft
+              <% end %>
+            </td>
+            <td class="table-actions">
+              <%= link_to "Edit", edit_admin_work_path(work), class: "action-link" %>
+              <%= link_to "View", work_path(work), class: "action-link", target: "_blank" if work.published? %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="empty-state">
+    <span class="empty-state-icon">🎨</span>
+    <h3>No works yet</h3>
+    <p>Start building your portfolio by adding your first work.</p>
+    <%= link_to "Add New Work", new_admin_work_path, class: "btn btn--primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+Commission Status Update
+
+Hello <%= @customer.first_name %>,
+
+The status of your commission "<%= @commission.title %>" has been updated.
+
+Previous status: <%= @previous_status.to_s.humanize %>
+New status: <%= @commission.status_label %>
+
+You can view your commission details at:
+<%= portal_commission_url(@commission) %>
+
+Thank you for choosing Coco's Stained Glass!

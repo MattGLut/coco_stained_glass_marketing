@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <h1>Your Quote is Ready!</h1>
+    
+    <p>Hello <%= @customer.first_name %>,</p>
+    
+    <p>Great news! We've prepared a quote for your commission: "<%= @commission.title %>".</p>
+    
+    <% if @commission.estimated_price.present? %>
+      <p><strong>Estimated Price:</strong> <%= number_to_currency(@commission.estimated_price) %></p>
+    <% end %>
+    
+    <% if @commission.estimated_start_date.present? %>
+      <p><strong>Estimated Start Date:</strong> <%= @commission.estimated_start_date.strftime("%B %d, %Y") %></p>
+    <% end %>
+    
+    <% if @commission.estimated_completion_date.present? %>
+      <p><strong>Estimated Completion:</strong> <%= @commission.estimated_completion_date.strftime("%B %d, %Y") %></p>
+    <% end %>
+    
+    <p>
+      Please review the details and let us know if you'd like to proceed. You can view the full quote in your 
+      <%= link_to "customer portal", portal_commission_url(@commission) %>.
+    </p>
+    
+    <p>Thank you for choosing Coco's Stained Glass!</p>
+  </body>
+</html>

@@ -121,4 +121,10 @@ group :test do
   gem "database_cleaner-active_record" # Clean database between tests
   gem "webmock"                       # Stub HTTP requests
   gem "pundit-matchers"               # RSpec matchers for Pundit policies
+
+  # Test coverage reporting
+  gem "simplecov", require: false
+
+  # Better RSpec output with progress bar and instant failures
+  gem "fuubar"
 end

@@ -28,7 +28,7 @@ module Admin
       if @category.save
         redirect_to admin_categories_path, notice: "Category was successfully created."
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -40,7 +40,7 @@ module Admin
       if @category.update(category_params)
         redirect_to admin_categories_path, notice: "Category was successfully updated."
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

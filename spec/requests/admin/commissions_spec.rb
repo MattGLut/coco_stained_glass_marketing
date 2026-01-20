@@ -113,7 +113,7 @@ RSpec.describe "Admin::Commissions", type: :request do
 
         it "renders the form with errors" do
           post admin_commissions_path, params: invalid_params
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end
@@ -145,7 +145,7 @@ RSpec.describe "Admin::Commissions", type: :request do
       context "with invalid params" do
         it "renders the form with errors" do
           patch admin_commission_path(commission), params: { commission: { title: "" } }
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end

@@ -24,7 +24,7 @@ module Admin
       if @update.update(update_params)
         redirect_to admin_commission_path(@commission), notice: "Update was successfully edited."
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

@@ -6,8 +6,8 @@ class PagesController < ApplicationController
     @recent_works = Work.published.recent.limit(4)
 
     set_meta_tags(
-      title: "Handcrafted Stained Glass Art",
-      description: "Discover the beauty of handcrafted stained glass in Nashville, TN. Custom commissions, windows, panels, and decorative art pieces serving Middle Tennessee."
+      title: "Stained Glass Repair & Custom Art - Nashville, TN",
+      description: "Expert stained glass repair and restoration in Nashville, TN. Custom commissions, church window restoration, and handcrafted art serving Middle Tennessee."
     )
   end
 

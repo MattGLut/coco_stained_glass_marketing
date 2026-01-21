@@ -4,11 +4,12 @@
     <%= display_meta_tags site: "Coco's Stained Glass",
                           separator: "—",
                           reverse: true,
-                          description: "Handcrafted stained glass art and custom commissions. Transform your space with light and color.",
-                          keywords: "stained glass, custom art, glass art, commissions, handcrafted, windows, panels",
+                          description: "Handcrafted stained glass art and custom commissions in Nashville, TN. Transform your space with light and color.",
+                          keywords: "stained glass, custom art, glass art, commissions, handcrafted, windows, panels, Nashville, Tennessee, Middle Tennessee, stained glass artist",
                           og: {
                             type: "website",
-                            site_name: "Coco's Stained Glass"
+                            site_name: "Coco's Stained Glass",
+                            image: image_url("og-default.jpg")
                           },
                           twitter: {
                             card: "summary_large_image"
@@ -19,6 +20,12 @@
     <meta name="application-name" content="Coco's Stained Glass">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#1a1a2e">
+
+    <%# Geo meta tags for Nashville, TN %>
+    <meta name="geo.region" content="US-TN">
+    <meta name="geo.placename" content="Nashville">
+    <meta name="geo.position" content="36.1627;-86.7816">
+    <meta name="ICBM" content="36.1627, -86.7816">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -31,16 +38,36 @@
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "Coco's Stained Glass",
-        "description": "Handcrafted stained glass art and custom commissions",
+        "description": "Handcrafted stained glass art and custom commissions serving Middle Tennessee",
         "@id": "<%= root_url rescue 'https://stainedglass.com' %>",
         "url": "<%= root_url rescue 'https://stainedglass.com' %>",
         "image": "<%= image_url('og-default.jpg') rescue '' %>",
         "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nashville",
+          "addressRegion": "TN",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 36.1627,
+          "longitude": -86.7816
+        },
+        "areaServed": {
+          "@type": "State",
+          "name": "Tennessee",
+          "containsPlace": {
+            "@type": "City",
+            "name": "Nashville"
+          }
+        },
         "makesOffer": {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Custom Stained Glass Commissions"
+            "name": "Custom Stained Glass Commissions",
+            "serviceType": "Art Commission"
           }
         }
       }

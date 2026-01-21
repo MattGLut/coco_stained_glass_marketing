@@ -11,7 +11,7 @@ class WorksController < ApplicationController
 
     set_meta_tags(
       title: "Gallery",
-      description: "Browse our collection of handcrafted stained glass art. Windows, panels, lamps, and custom pieces."
+      description: "Browse our collection of handcrafted stained glass art in Nashville, TN. Windows, panels, lamps, and custom pieces serving Middle Tennessee."
     )
   end
 

@@ -2,8 +2,8 @@
   <%= link_to work_path(work), class: "work-card-link" do %>
     <div class="card-image">
       <% if work.has_images? %>
-        <%= image_tag work.primary_image.variant(:medium), 
-            alt: work.title,
+        <%= image_tag work.primary_image.variant(:medium),
+            alt: "#{work.title} - #{work.medium} stained glass art#{work.year_created ? " (#{work.year_created})" : ""}",
             loading: "lazy" %>
       <% else %>
         <div class="card-image-placeholder">

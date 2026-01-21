@@ -3,6 +3,33 @@
   <script type="application/ld+json">
     <%= raw @artwork_json_ld.to_json %>
   </script>
+  <%# Breadcrumb structured data %>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "<%= root_url %>"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Gallery",
+          "item": "<%= works_url %>"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "<%= @work.title %>",
+          "item": "<%= work_url(@work) %>"
+        }
+      ]
+    }
+  </script>
 <% end %>
 
 <section class="work-detail">

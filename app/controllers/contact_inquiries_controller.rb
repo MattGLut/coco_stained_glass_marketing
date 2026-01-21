@@ -7,7 +7,7 @@ class ContactInquiriesController < ApplicationController
 
     set_meta_tags(
       title: "Contact",
-      description: "Get in touch with Coco's Stained Glass. Inquire about custom commissions, ask questions, or just say hello."
+      description: "Get in touch with Coco's Stained Glass in Nashville, TN. Commission a custom piece or ask about our handcrafted stained glass art."
     )
   end
 

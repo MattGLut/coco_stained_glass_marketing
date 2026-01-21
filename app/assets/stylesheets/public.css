@@ -150,40 +150,49 @@ body::before {
   .nav-toggle {
     display: flex;
     z-index: 101;
+    position: relative;
   }
 
   .nav-menu {
-    position: fixed;
+    position: absolute;
     top: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    max-width: 320px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    z-index: 100;
     background: var(--color-midnight);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: var(--space-8);
-    transform: translateX(100%);
-    transition: transform var(--transition-base);
-    border-left: 1px solid rgba(232, 168, 56, 0.1);
+    gap: var(--space-5);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
   }
 
   .nav-menu.is-open {
-    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .nav-links {
     flex-direction: column;
     text-align: center;
+    gap: var(--space-2);
   }
 
   .nav-link {
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
+    padding: var(--space-3) var(--space-4);
   }
 
   .nav-auth {
     flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
   }
 }
 
@@ -1094,7 +1103,7 @@ body::before {
   }
 
   .process-steps li {
-    padding-top: var(--space-14);
+    padding-top: 60px;
   }
 
   .process-steps li::before {

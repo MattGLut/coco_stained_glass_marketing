@@ -75,7 +75,7 @@
 .admin-nav-link:hover,
 .admin-nav-link.active {
   color: var(--color-cream);
-  background: rgba(232, 168, 56, 0.1);
+  background: rgba(45, 125, 90, 0.1);
 }
 
 .admin-nav-link.active {
@@ -320,7 +320,7 @@
 }
 
 .quick-action:hover {
-  background: rgba(232, 168, 56, 0.1);
+  background: rgba(45, 125, 90, 0.1);
   border-color: var(--color-accent);
   transform: translateY(-2px);
 }
@@ -471,7 +471,7 @@
 }
 
 .badge--featured {
-  background: rgba(232, 168, 56, 0.2);
+  background: rgba(45, 125, 90, 0.2);
   color: var(--color-accent);
 }
 
@@ -694,7 +694,7 @@ button.action-link {
 
 .form-file-input:hover {
   border-color: var(--color-accent);
-  background: rgba(232, 168, 56, 0.05);
+  background: rgba(45, 125, 90, 0.05);
 }
 
 .form-file-input::file-selector-button {

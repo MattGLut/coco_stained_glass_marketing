@@ -7,17 +7,18 @@
    CSS CUSTOM PROPERTIES (Design Tokens)
    ============================================================================= */
 :root {
-  /* Color Palette - Deep, rich jewel tones */
+  /* Color Palette - Rich green jewel tones */
   --color-midnight: #0f0f1a;
   --color-deep-navy: #1a1a2e;
   --color-twilight: #16213e;
   --color-sapphire: #1e3a5f;
-  --color-amber: #e8a838;
-  --color-amber-light: #f4c860;
-  --color-rose: #c45b84;
-  --color-jade: #3d8b7a;
-  --color-amethyst: #7b5ea7;
-  --color-ruby: #9b2335;
+  --color-emerald: #2d7d5a;
+  --color-emerald-light: #4a9d7a;
+  --color-mint: #7fc8a9;
+  --color-forest: #1b4332;
+  --color-sage: #8fa86b;
+  --color-teal: #2a9d8f;
+  --color-olive: #6b7f5a;
   --color-cream: #f8f5f0;
   --color-pearl: #fefefe;
   --color-smoke: #a8a8b3;
@@ -29,13 +30,13 @@
   --color-text-dark: var(--color-midnight);
   --color-background: var(--color-deep-navy);
   --color-surface: var(--color-twilight);
-  --color-accent: var(--color-amber);
-  --color-accent-hover: var(--color-amber-light);
+  --color-accent: var(--color-emerald);
+  --color-accent-hover: var(--color-emerald-light);
 
   /* Status colors */
-  --color-success: var(--color-jade);
-  --color-error: var(--color-ruby);
-  --color-warning: var(--color-amber);
+  --color-success: var(--color-teal);
+  --color-error: #c44536;
+  --color-warning: var(--color-sage);
 
   /* Typography */
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -80,7 +81,7 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 40px rgba(232, 168, 56, 0.2);
+  --shadow-glow: 0 0 40px rgba(45, 125, 90, 0.2);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -369,7 +370,7 @@ p:last-child {
   outline: none;
   border-color: var(--color-accent);
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(232, 168, 56, 0.1);
+  box-shadow: 0 0 0 3px rgba(45, 125, 90, 0.1);
 }
 
 .form-input::placeholder,
@@ -514,7 +515,7 @@ p:last-child {
 }
 
 .card:hover {
-  border-color: rgba(232, 168, 56, 0.2);
+  border-color: rgba(45, 125, 90, 0.2);
   box-shadow: var(--shadow-lg);
 }
 
@@ -566,25 +567,25 @@ p:last-child {
 
 .status-badge--inquiry,
 .status-badge--new {
-  background: rgba(123, 94, 167, 0.2);
-  color: var(--color-amethyst);
+  background: rgba(143, 168, 107, 0.2);
+  color: var(--color-sage);
 }
 
 .status-badge--accepted,
 .status-badge--pending {
-  background: rgba(232, 168, 56, 0.2);
-  color: var(--color-amber);
+  background: rgba(45, 125, 90, 0.2);
+  color: var(--color-emerald);
 }
 
 .status-badge--in_progress {
-  background: rgba(61, 139, 122, 0.2);
-  color: var(--color-jade);
+  background: rgba(42, 157, 143, 0.2);
+  color: var(--color-teal);
 }
 
 .status-badge--completed,
 .status-badge--responded {
-  background: rgba(61, 139, 122, 0.3);
-  color: var(--color-jade);
+  background: rgba(42, 157, 143, 0.3);
+  color: var(--color-teal);
 }
 
 .status-badge--delivered,

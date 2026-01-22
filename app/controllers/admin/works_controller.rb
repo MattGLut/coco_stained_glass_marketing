@@ -52,7 +52,11 @@ module Admin
       authorize @work
       @categories = Category.ordered
 
+      # Handle images separately to append rather than replace
+      new_images = params[:work]&.delete(:images)
+
       if @work.update(work_params)
+        @work.images.attach(new_images) if new_images.present?
         redirect_to admin_work_path(@work), notice: "Work was successfully updated.", status: :see_other
       else
         render :edit, status: :unprocessable_content

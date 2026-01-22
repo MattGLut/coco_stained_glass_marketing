@@ -12,7 +12,7 @@ RSpec.describe ContactMailer, type: :mailer do
     end
 
     it "has the correct subject" do
-      expect(mail.subject).to eq("Thank you for contacting Coco's Stained Glass")
+      expect(mail.subject).to eq("Thank you for contacting CMB Glass & Stone")
     end
 
     it "renders the body" do

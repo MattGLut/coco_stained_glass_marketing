@@ -6,7 +6,7 @@ class ContactMailer < ApplicationMailer
     
     mail(
       to: @inquiry.email,
-      subject: "Thank you for contacting Coco's Stained Glass"
+      subject: "Thank you for contacting CMB Glass & Stone"
     )
   end
 

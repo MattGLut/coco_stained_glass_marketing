@@ -70,7 +70,7 @@ RSpec.describe CommissionUpdate, type: :model do
 
     it "returns default name when user is nil" do
       update = build(:commission_update, user: nil)
-      expect(update.author_name).to eq("Coco's Stained Glass")
+      expect(update.author_name).to eq("CMB Glass & Stone")
     end
   end
 

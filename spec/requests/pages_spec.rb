@@ -11,7 +11,7 @@ RSpec.describe "Pages", type: :request do
 
     it "renders the home page" do
       get root_path
-      expect(response.body).to include("Coco's Stained Glass")
+      expect(response.body).to include("CMB Glass & Stone")
     end
 
     context "with featured works" do

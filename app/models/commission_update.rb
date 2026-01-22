@@ -52,7 +52,7 @@ class CommissionUpdate < ApplicationRecord
   # Instance Methods
   # =============================================================================
   def author_name
-    user&.full_name || "Coco's Stained Glass"
+    user&.full_name || "CMB Glass & Stone"
   end
 
   def has_images?

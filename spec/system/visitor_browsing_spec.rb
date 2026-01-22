@@ -10,7 +10,7 @@ RSpec.describe "Visitor browsing", type: :system do
   describe "homepage" do
     it "displays the site header" do
       visit root_path
-      expect(page).to have_content("Coco's Stained Glass")
+      expect(page).to have_content("CMB Glass & Stone")
     end
 
     it "has navigation links" do

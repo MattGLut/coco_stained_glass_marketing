@@ -14,7 +14,7 @@ class PagesController < ApplicationController
   def about
     set_meta_tags(
       title: "About",
-      description: "Learn about Coco's Stained Glass in Nashville, TN - the artistry, process, and passion behind each handcrafted piece serving Middle Tennessee."
+      description: "Learn about CMB Glass & Stone in Nashville, TN - the artistry, process, and passion behind each handcrafted piece serving Middle Tennessee."
     )
   end
 end

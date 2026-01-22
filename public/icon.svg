@@ -1,3 +1,9 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="#2d7d5a"/>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Diamond shape matching the ◇ icon used throughout the app -->
+  <polygon 
+    points="256,32 480,256 256,480 32,256" 
+    fill="none"
+    stroke="#2d7d5a"
+    stroke-width="24"
+  />
 </svg>

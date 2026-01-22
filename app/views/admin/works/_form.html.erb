@@ -54,10 +54,9 @@
               <% @work.images.each do |image| %>
                 <div class="image-item">
                   <%= image_tag image.variant(:thumb), alt: "Work image" %>
-                  <%= button_to "Remove", remove_image_admin_work_path(@work, image_id: image.id), 
-                      method: :delete,
+                  <%= link_to "Remove", remove_image_admin_work_path(@work, image_id: image.id), 
                       class: "image-remove-btn",
-                      data: { turbo_confirm: "Remove this image?" } %>
+                      data: { turbo_method: :delete, turbo_confirm: "Remove this image?" } %>
                 </div>
               <% end %>
             </div>
@@ -123,11 +122,9 @@
     <%= link_to "Cancel", admin_works_path, class: "btn btn--ghost btn--lg" %>
     
     <% if @work.persisted? %>
-      <%= button_to "Delete", admin_work_path(@work), 
-          method: :delete,
+      <%= link_to "Delete", admin_work_path(@work), 
           class: "btn btn--danger btn--lg",
-          form: { style: 'display: inline-block;' },
-          data: { turbo_confirm: "Are you sure you want to delete this work?" } %>
+          data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this work?" } %>
     <% end %>
   </div>
 <% end %>

@@ -33,10 +33,9 @@
     <%= link_to "Cancel", admin_categories_path, class: "btn btn--ghost btn--lg" %>
     
     <% if @category.persisted? %>
-      <%= button_to "Delete", admin_category_path(@category), 
-          method: :delete,
+      <%= link_to "Delete", admin_category_path(@category), 
           class: "btn btn--danger btn--lg",
-          data: { turbo_confirm: "Are you sure? Works will be uncategorized." } %>
+          data: { turbo_method: :delete, turbo_confirm: "Are you sure? Works will be uncategorized." } %>
     <% end %>
   </div>
 <% end %>

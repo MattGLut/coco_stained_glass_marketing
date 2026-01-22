@@ -43,23 +43,29 @@
     <div class="work-detail-grid">
       <div class="work-gallery">
         <% if @work.has_images? %>
-          <div class="work-main-image" data-controller="lightbox">
-            <%= image_tag @work.primary_image.variant(:large),
-                alt: @work.title,
-                class: "main-image",
-                data: { action: "click->lightbox#open" } %>
-          </div>
-
-          <% if @work.images.count > 1 %>
-            <div class="work-thumbnails">
-              <% @work.images.each_with_index do |image, index| %>
-                <button class="thumbnail <%= 'active' if index == 0 %>"
-                        data-index="<%= index %>">
-                  <%= image_tag image.variant(:thumb), alt: "#{@work.title} - Image #{index + 1}" %>
-                </button>
-              <% end %>
+          <div data-controller="lightbox">
+            <div class="work-main-image">
+              <%= image_tag @work.primary_image.variant(:large),
+                  alt: @work.title,
+                  class: "main-image",
+                  "data-lightbox-target": "mainImage",
+                  "data-action": "click->lightbox#open" %>
             </div>
-          <% end %>
+
+            <% if @work.images.count > 1 %>
+              <div class="work-thumbnails">
+                <% @work.images.each_with_index do |image, index| %>
+                  <button class="thumbnail <%= 'active' if index == 0 %>"
+                          data-index="<%= index %>"
+                          data-large-url="<%= url_for(image.variant(:large)) %>"
+                          data-lightbox-target="thumbnail"
+                          data-action="click->lightbox#selectImage">
+                    <%= image_tag image.variant(:thumb), alt: "#{@work.title} - Image #{index + 1}" %>
+                  </button>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         <% else %>
           <div class="work-no-image">
             <span class="no-image-icon">◇</span>

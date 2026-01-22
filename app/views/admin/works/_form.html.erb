@@ -126,6 +126,7 @@
       <%= button_to "Delete", admin_work_path(@work), 
           method: :delete,
           class: "btn btn--danger btn--lg",
+          form: { style: 'display: inline-block;' },
           data: { turbo_confirm: "Are you sure you want to delete this work?" } %>
     <% end %>
   </div>

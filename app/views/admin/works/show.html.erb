@@ -24,13 +24,16 @@
 <div class="admin-detail-grid">
   <div class="admin-detail-main">
     <% if @work.has_images? %>
-      <div class="work-images">
-        <% @work.images.each do |image| %>
-          <div class="work-image">
-            <%= image_tag image.variant(:medium), alt: @work.title %>
-          </div>
-        <% end %>
-      </div>
+      <section class="admin-section">
+        <h3>Images</h3>
+        <div class="image-grid">
+          <% @work.images.each do |image| %>
+            <div class="image-item">
+              <%= image_tag image.variant(:medium), alt: @work.title %>
+            </div>
+          <% end %>
+        </div>
+      </section>
     <% end %>
 
     <% if @work.description.present? %>

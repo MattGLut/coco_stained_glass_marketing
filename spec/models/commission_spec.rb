@@ -32,6 +32,8 @@ RSpec.describe Commission, type: :model do
     it { is_expected.to validate_length_of(:description).is_at_most(5000) }
     it { is_expected.to validate_length_of(:customer_notes).is_at_most(2000) }
     it { is_expected.to validate_length_of(:internal_notes).is_at_most(5000) }
+    it { is_expected.to validate_length_of(:dimensions).is_at_most(100) }
+    it { is_expected.to validate_length_of(:location).is_at_most(200) }
     it { is_expected.to validate_numericality_of(:estimated_price).is_greater_than_or_equal_to(0).allow_nil }
     it { is_expected.to validate_numericality_of(:final_price).is_greater_than_or_equal_to(0).allow_nil }
     it { is_expected.to validate_numericality_of(:deposit_amount).is_greater_than_or_equal_to(0).allow_nil }
@@ -178,6 +180,25 @@ RSpec.describe Commission, type: :model do
 
         expect(Commission.for_user(user)).to include(user_commission)
         expect(Commission.for_user(user)).not_to include(other_commission)
+      end
+    end
+
+    describe ".recent" do
+      it "orders by created_at descending" do
+        old_commission = create(:commission, created_at: 2.days.ago)
+        new_commission = create(:commission, created_at: 1.day.ago)
+
+        expect(Commission.recent.first).to eq(new_commission)
+      end
+    end
+
+    describe ".by_status" do
+      it "returns commissions with the given status" do
+        inquiry = create(:commission, status: "inquiry")
+        in_progress = create(:commission, :in_progress)
+
+        expect(Commission.by_status("inquiry")).to include(inquiry)
+        expect(Commission.by_status("inquiry")).not_to include(in_progress)
       end
     end
   end

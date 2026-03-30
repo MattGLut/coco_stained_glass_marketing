@@ -35,7 +35,7 @@ RSpec.describe ContactInquiry, type: :model do
   end
 
   describe "enums" do
-    it { is_expected.to define_enum_for(:status).backed_by_column_of_type(:string).with_values(pending: "pending", responded: "responded", archived: "archived") }
+    it { is_expected.to define_enum_for(:status).backed_by_column_of_type(:string).with_values(pending: "pending", responded: "responded", archived: "archived").with_default(:pending) }
   end
 
   describe "scopes" do

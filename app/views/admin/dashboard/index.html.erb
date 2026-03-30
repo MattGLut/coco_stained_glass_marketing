@@ -22,7 +22,7 @@
     <span class="stat-link">Manage →</span>
   <% end %>
 
-  <%= link_to admin_users_path, class: "stat-card" do %>
+  <%= link_to admin_users_path(role: "customer"), class: "stat-card" do %>
     <div class="stat-value"><%= @users_count %></div>
     <div class="stat-label">Customers</div>
     <span class="stat-link">View all →</span>

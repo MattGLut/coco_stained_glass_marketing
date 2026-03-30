@@ -65,10 +65,10 @@
     <% if @commissions_by_status.any? %>
       <div class="status-breakdown">
         <% @commissions_by_status.each do |status, count| %>
-          <div class="status-row">
+          <%= link_to admin_commissions_path(status: status), class: "status-row" do %>
             <span class="status-name"><%= status.humanize %></span>
             <span class="status-count"><%= count %></span>
-          </div>
+          <% end %>
         <% end %>
       </div>
     <% else %>

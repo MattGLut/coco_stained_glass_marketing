@@ -234,6 +234,9 @@
   background: rgba(248, 245, 240, 0.03);
   border-radius: var(--radius-sm);
   transition: background var(--transition-fast);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .admin-list-item:hover {

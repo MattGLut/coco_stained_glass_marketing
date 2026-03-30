@@ -34,7 +34,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "enums" do
-    it { is_expected.to define_enum_for(:role).with_values(customer: 0, admin: 1) }
+    it { is_expected.to define_enum_for(:role).with_values(customer: 0, admin: 1).with_default(:customer) }
   end
 
   describe "#full_name" do

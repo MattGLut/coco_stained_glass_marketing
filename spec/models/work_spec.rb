@@ -28,9 +28,15 @@ RSpec.describe Work, type: :model do
 
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_length_of(:title).is_at_most(200) }
-    # Note: slug presence/uniqueness is handled by FriendlyId which auto-generates
-    # slugs before validation. See "FriendlyId" describe block for slug behavior tests.
     it { is_expected.to validate_length_of(:description).is_at_most(2000) }
+
+    it "declares a presence validation on slug" do
+      expect(Work.validators_on(:slug).map(&:class)).to include(ActiveRecord::Validations::PresenceValidator)
+    end
+
+    it "declares a uniqueness validation on slug" do
+      expect(Work.validators_on(:slug).any? { |v| v.is_a?(ActiveRecord::Validations::UniquenessValidator) }).to be true
+    end
     it { is_expected.to validate_length_of(:dimensions).is_at_most(100) }
     it { is_expected.to validate_length_of(:medium).is_at_most(200) }
 
@@ -80,6 +86,50 @@ RSpec.describe Work, type: :model do
       it "returns only featured works" do
         expect(Work.featured).to include(featured_work)
         expect(Work.featured).not_to include(published_work)
+      end
+    end
+
+    describe ".ordered" do
+      it "orders by position ascending then created_at descending" do
+        old_work = create(:work, position: 1, created_at: 2.days.ago)
+        new_work = create(:work, position: 1, created_at: 1.day.ago)
+        first_work = create(:work, position: 0)
+
+        result = Work.ordered
+        expect(result.index(first_work)).to be < result.index(new_work)
+        expect(result.index(new_work)).to be < result.index(old_work)
+      end
+    end
+
+    describe ".recent" do
+      it "orders by created_at descending" do
+        old_work = create(:work, created_at: 2.days.ago)
+        new_work = create(:work, created_at: 1.day.ago)
+
+        result = Work.recent.where(id: [old_work.id, new_work.id])
+        expect(result.first).to eq(new_work)
+        expect(result.last).to eq(old_work)
+      end
+    end
+
+    describe ".by_year" do
+      it "returns works from the given year" do
+        work_2022 = create(:work, year_created: 2022)
+        work_2023 = create(:work, year_created: 2023)
+
+        expect(Work.by_year(2022)).to include(work_2022)
+        expect(Work.by_year(2022)).not_to include(work_2023)
+      end
+    end
+
+    describe ".in_category" do
+      it "returns works in the given category" do
+        category = create(:category)
+        in_cat = create(:work, categories: [category])
+        out_cat = create(:work)
+
+        expect(Work.in_category(category.id)).to include(in_cat)
+        expect(Work.in_category(category.id)).not_to include(out_cat)
       end
     end
   end

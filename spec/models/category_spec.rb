@@ -20,9 +20,15 @@ RSpec.describe Category, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_uniqueness_of(:name) }
     it { is_expected.to validate_length_of(:name).is_at_most(100) }
-    # Note: slug presence/uniqueness is handled by FriendlyId which auto-generates
-    # slugs before validation. See "FriendlyId" describe block for slug behavior tests.
     it { is_expected.to validate_length_of(:description).is_at_most(500) }
+
+    it "declares a presence validation on slug" do
+      expect(Category.validators_on(:slug).map(&:class)).to include(ActiveRecord::Validations::PresenceValidator)
+    end
+
+    it "declares a uniqueness validation on slug" do
+      expect(Category.validators_on(:slug).any? { |v| v.is_a?(ActiveRecord::Validations::UniquenessValidator) }).to be true
+    end
   end
 
   describe "scopes" do

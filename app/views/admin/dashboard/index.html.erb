@@ -39,7 +39,7 @@
     <% if @recent_inquiries.any? %>
       <div class="admin-list">
         <% @recent_inquiries.each do |inquiry| %>
-          <div class="admin-list-item">
+          <%= link_to admin_contact_inquiry_path(inquiry), class: "admin-list-item" do %>
             <div class="list-item-main">
               <strong><%= inquiry.name %></strong>
               <span class="list-item-meta"><%= inquiry.email %></span>
@@ -48,7 +48,7 @@
               <span class="status-badge status-badge--<%= inquiry.status %>"><%= inquiry.status %></span>
               <span class="list-item-date"><%= time_ago_in_words(inquiry.created_at) %> ago</span>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     <% else %>

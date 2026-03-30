@@ -37,6 +37,11 @@ RSpec.describe "Admin::Dashboard", type: :request do
         get admin_root_path
         expect(response.body).to include("Dashboard")
       end
+
+      it "links customers card to the filtered users index" do
+        get admin_root_path
+        expect(response.body).to include(admin_users_path(role: "customer"))
+      end
     end
   end
 end

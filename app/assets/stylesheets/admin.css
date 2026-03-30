@@ -286,6 +286,14 @@
   padding: var(--space-3) var(--space-4);
   background: rgba(248, 245, 240, 0.03);
   border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.status-row:hover {
+  background: rgba(248, 245, 240, 0.06);
 }
 
 .status-name {

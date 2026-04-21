@@ -253,7 +253,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     net-ssh (7.3.2)
-    newrelic_rpm (10.3.0)
+    newrelic_rpm (10.4.0)
       logger
     nio4r (2.7.5)
     nokogiri (1.19.2-x64-mingw-ucrt)
@@ -626,7 +626,7 @@ CHECKSUMS
   net-sftp (4.0.0) sha256=65bb91c859c2f93b09826757af11b69af931a3a9155050f50d1b06d384526364
   net-smtp (0.5.1) sha256=ed96a0af63c524fceb4b29b0d352195c30d82dd916a42f03c62a3a70e5b70736
   net-ssh (7.3.2) sha256=65029e213c380e20e5fd92ece663934ab0a0fe888e0cd7cc6a5b664074362dd4
-  newrelic_rpm (10.3.0) sha256=304775cb535b5a1e3dc32b1fe82e50ddb5bf0f9b937449722355d5b5652d828a
+  newrelic_rpm (10.4.0) sha256=36e3bc31adc89c3fe2056d1014a4d93b38bb63050050a1a442b35c4559531291
   nio4r (2.7.5) sha256=6c90168e48fb5f8e768419c93abb94ba2b892a1d0602cb06eef16d8b7df1dca1
   nokogiri (1.19.2-x64-mingw-ucrt) sha256=8ccf25eea3363a2c7b3f2e173a3400582c633cfead27f805df9a9c56d4852d1a
   nokogiri (1.19.2-x86_64-linux-gnu) sha256=fa8feca882b73e871a9845f3817a72e9734c8e974bdc4fbad6e4bc6e8076b94f
